@@ -10,6 +10,7 @@ local GetMainData = function()
     end
 end
 local _p = GetMainData()
+
 local beatgym = function(gym)
     local index = {
         109,
@@ -34,7 +35,8 @@ local beatgym = function(gym)
     wait(1)
     _p.Network:post('BattleEvent', battle.battleId, 'forfeit', 'p2')
     _p.Network:post('BattleEvent', battle.battleId, 'destroy')
-    
-     for i = 1,8 do
+end
+
+for i = 1,8 do
             beatgym(i)
         end
