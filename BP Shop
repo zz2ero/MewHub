@@ -1,0 +1,11 @@
+local _p = nil
+      for _, v in pairs(getgc(true)) do
+         if typeof(v) == "table" then
+             if rawget(v, "PlayerData") then
+                 _p = v
+                 break
+             end
+         end
+      end
+      
+_p.Menu.battleShop:open()
