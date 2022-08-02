@@ -1,0 +1,16 @@
+ function GetMainData()
+          for i, v in pairs(debug.getregistry()) do
+              if typeof(v) == "function" then
+                  for a, b in pairs(debug.getupvalues(v)) do
+                      if typeof(b) == "table" and rawget(b, "Fishing") then
+                          return b
+                      end
+                  end
+              end
+          end
+      end
+      Data = GetMainData()
+      AuthKey = debug.getupvalue(Data["Network"]["getAuthKey"], 1)
+      local SF = {}
+      SF["Fly"] = Data["Menu"]["map"]["fly"]
+      SF["Fly"](unpack(SF))
