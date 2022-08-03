@@ -13,7 +13,7 @@ local GetMainData = function()
     
     local beatgym = function(gym)
         local index = {
-            39
+            181
         }
         local battle = _p.Network:get('BattleFunction', 'new', {
             ["expShare"] = false,
