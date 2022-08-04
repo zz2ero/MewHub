@@ -1,0 +1,30 @@
+local _p = nil
+        for _, v in pairs(getgc(true)) do
+            if typeof(v) == "table" then
+                if rawget(v, "PlayerData") then
+                    _p = v
+                    break
+                end
+            end
+        end
+        
+        
+        local itemid1 = 'masterball'
+    local q1 = 1
+    local q2 = 1
+    local q3 = 1
+    local spawnitem = function(itemid, q)
+        for i = 1, q do
+            _p.Network:get("PDS", "giveItem", itemid, 1, true)
+            _p.Network:get("PDS", "takeItem", 1)
+        end
+    end
+    
+     spawnitem('bottlecap', 6) -- item + quantity
+
+_p.Network:get("PDS", "trainpokemon", 2, 'HP')
+_p.Network:get("PDS", "trainpokemon", 3, 'Speed')
+_p.Network:get("PDS", "trainpokemon", 3, 'Defense')
+_p.Network:get("PDS", "trainpokemon", 3, 'Sp Def')
+_p.Network:get("PDS", "trainpokemon", 3, 'Sp Atk')
+_p.Network:get("PDS", "trainpokemon", 3, 'Attack')
