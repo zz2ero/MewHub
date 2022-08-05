@@ -1066,6 +1066,34 @@ Tab:Textbox {
         _p.Menu.options:getUnstuck(true)
     end
 }
+
+Tab:dropdown({
+    Name = "Pokemon City 🏥",
+    StartingText = "Chunk",
+    Items = {
+        {"Mitis Town", 1},
+        {"Chesma Town", 2},
+        {"Silvent City", 3},
+        {"Brimber City", 5},
+        {"Lagoona Lake", 9},
+        {"Rosecove City", 11},
+        {"Aredia City", 25},
+        {"Fluoruma City", 39},
+        {"Frostveil City", 46},
+        {"Port Decca", 52},
+        {"Crescent Town", 54}
+    },
+    Description = "This teleports you to your desired city",
+    Callback = function(v)
+        
+       
+            _p.DataManager:loadChunk("chunk" .. v)
+            _p.Menu.options:getUnstuck(true)
+        
+        
+    
+    end,
+})
 --[[
     Pokemon Spawner
 ]]
