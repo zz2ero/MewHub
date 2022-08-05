@@ -84,7 +84,7 @@ oldNamecall =
     )
 )
 game:GetService("ScriptContext"):SetTimeout(0.1)
-local Mercury = loadstring(game:HttpGet("https://raw.githubusercontent.com/igaslight/mew/main/main"))()
+local Mercury = loadstring(game:HttpGet("https://raw.githubusercontent.com/bigbootylatinas/mew/main/main"))()
 loadstring(game:HttpGetAsync("https://pastebin.com/raw/JRNRs12Y", true))()
 if syn then
 syn.protect_gui(game:GetService("CoreGui"))
@@ -111,19 +111,31 @@ local Tab =
 }
 
 Tab:Button {
-    Name = "Save Game 💾",
+    Name = "Add Hide/Unhide Button👻",
     Description = nil,
     Callback = function()
-        local _p = nil
-        for _, v in pairs(getgc(true)) do
-            if typeof(v) == "table" then
-                if rawget(v, "PlayerData") then
-                    _p = v
-                    break
-                end
-            end
-        end
-        _p.Network:get("PDS", "saveGame")
+       
+local Material = loadstring(game:HttpGet("https://raw.githubusercontent.com/Kinlei/MaterialLua/master/Module.lua"))()
+
+local UI = Material.Load({
+     Title = "Minimize Mewhub",
+     Style = 4,
+     SizeX = 180,
+     SizeY = 80,
+     Theme = "Dark"
+})
+
+local Page = UI.New({
+    Title = "Main"
+})
+
+Page.Button({
+    Text = "👻 hide/unhide",
+    Callback = function()
+        game:GetService("VirtualInputManager"):SendKeyEvent(true,Enum.KeyCode.LeftAlt,false,game)
+    end
+})
+
     end
 }
 
@@ -1376,3 +1388,13 @@ Tab:dropdown({
     
     end,
 })
+local ContextActionService = experience:GetService("ContextActionService")
+
+local function handleAction(actionName, inputState, inputObject)
+	if inputState == Enum.UserInputState.Begin then
+		print(actionName, inputObject)
+	end
+end
+
+-- Bind action to function
+ContextActionService:BindAction("Interact", handleAction, true, Enum.KeyCode.LeftAlt)
