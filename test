@@ -1040,7 +1040,25 @@ Tab:Button {
     end
 }
 
-
+Tab:dropdown({
+    Name = "Item List 📃",
+    StartingText = "these are common items spawned",
+    Items = {
+        {"masterball", 'masterball'},
+        {"rarecandy", 'rarecandy'},
+        {"bottlecap", 'bottlecap'},
+        {"shinystar", 'shinystar'}
+    },
+    Description = "clicking on an option spawns (+1)",
+    Callback = function(v)
+        
+       
+        spawnitem(v, 1)
+        
+        
+    
+    end,
+})
 --[[
     CHUNK LOADER
 ]]
