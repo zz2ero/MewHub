@@ -1248,9 +1248,16 @@ Tab:dropdown({
     end
     end,
 })
+local pee
+Tab:Textbox {
+    Name = "Insert Amount of Rare Candies 🗳️",
+    Callback = function(str)
+        pee = str
+    end
+}
 
 Tab:dropdown({
-    Name = "Pokemon Instant Lvl 100 📈⬆️",
+    Name = "Pokemon Instant Lvl Changer 📈⬆️",
     StartingText = "Party Slot",
     Items = {
         {"Slot 1", 1},
@@ -1260,9 +1267,9 @@ Tab:dropdown({
         {"Slot 5", 5},
         {"Slot 6", 6}
     },
-    Description = "This changes your selected pokemon's EV's to max stat",
+    Description = "This uses the amount of rare candies that you input above",
     Callback = function(v)
-    q = 99
+    q = pee
         for i = 1, q do
     spawnitem('rarecandy', 1) -- item + quantity
    _p.Network:get("PDS", "useItem", 'rarecandy', v)     
