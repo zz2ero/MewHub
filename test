@@ -1797,7 +1797,7 @@ Tab:dropdown({
 ]]
 local Tab =
     GUI:Tab {
-    Name = "Pokemon Spawner",
+    Name = "Pokemon Spawner (WILL CRASH YOU ATM)",
     Icon = "rbxassetid://10441107015"
 }
 local amtPoke
