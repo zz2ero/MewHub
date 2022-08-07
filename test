@@ -1060,6 +1060,54 @@ Tab:Button {
                                 end 
 				if(itemid1 == "blueorb") then itemid1 = ""
                                 end 
+				
+				
+			if(itemid1 == "adamantmint") then itemid1 = ""
+                        end
+                        if(itemid1 == "boldmint") then itemid1 = ""
+                            end
+                            if(itemid1 == "bravemint") then itemid1 = ""
+                                end
+				 if(itemid1 == "calmmint") then itemid1 = ""
+                                end 
+				if(itemid1 == "carefulmint") then itemid1 = ""
+                                end 
+				if(itemid1 == "gentlemint") then itemid1 = ""
+                        end
+                        if(itemid1 == "hastymint") then itemid1 = ""
+                            end
+                            if(itemid1 == "implishmint") then itemid1 = ""
+                                end
+				 if(itemid1 == "jollymint") then itemid1 = ""
+                                end 
+				if(itemid1 == "laxmint") then itemid1 = ""
+                                end 
+				if(itemid1 == "lonelymint") then itemid1 = ""
+                        end
+                        if(itemid1 == "mildmint") then itemid1 = ""
+                            end
+                            if(itemid1 == "modestmint") then itemid1 = ""
+                                end
+				 if(itemid1 == "naivemint") then itemid1 = ""
+                                end 
+				if(itemid1 == "naughtymint") then itemid1 = ""
+                                end 
+				if(itemid1 == "quietmint") then itemid1 = ""
+                        end
+                        if(itemid1 == "rashmint") then itemid1 = ""
+                            end
+                            if(itemid1 == "relaxedmint") then itemid1 = ""
+                                end
+				 if(itemid1 == "sassymint") then itemid1 = ""
+                                end 
+				if(itemid1 == "seriousmint") then itemid1 = ""
+                                end 
+				if(itemid1 == "timidmint") then itemid1 = ""
+                        end
+
+				
+				
+				
         spawnitem(itemid1, q1)
     end
 }
