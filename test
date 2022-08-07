@@ -1036,12 +1036,18 @@ Tab:Button {
     Name = "Spawn Item ✨",
     Description = nil,
     Callback = function()
-        if(itemid1 = "shinystar") then itemid1 = ""
-            if(itemid1 = "bottlecap") then itemid1 = ""
-                if(itemid1 = "mewtwoitey") then itemid1 = ""
-                    if(itemid1 = "mewtwoitex") then itemid1 = ""
-                        if(itemid1 = "latiasite") then itemid1 = ""
-                            if(itemid1 = "latiosite") then itemid1 = ""
+        if(itemid1 == "shinystar") then itemid1 = ""
+            end
+            if(itemid1 == "bottlecap") then itemid1 = ""
+                end
+                if(itemid1 == "mewtwoitey") then itemid1 = ""
+                    end
+                    if(itemid1 == "mewtwoitex") then itemid1 = ""
+                        end
+                        if(itemid1 == "latiasite") then itemid1 = ""
+                            end
+                            if(itemid1 == "latiosite") then itemid1 = ""
+                                end
         spawnitem(itemid1, q1)
     end
 }
