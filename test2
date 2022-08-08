@@ -1877,6 +1877,15 @@ local Tab =
     Name = "PC",
     Icon = "rbxassetid://10441119519"
 }
+
+Tab:Button {
+    Name = "Open PC 🆔",
+    Description = nil,
+    Callback = function()
+        syn.secure_call(_p.Menu.pc.bootUp, localPlayer.PlayerScripts.ChatScript, _p.Menu.pc)
+    end
+}
+
 local text
 Tab:Textbox {
     Name = "Type Name 🆔",
