@@ -1,0 +1,83 @@
+local Mercury = loadstring(game:HttpGet("https://raw.githubusercontent.com/bigbootylatinas/mew/main/main"))()
+local GUI =
+    Mercury:Create {
+    Name = "MewHub",
+    Size = UDim2.fromOffset(600, 400),
+    Theme = Mercury.Themes.Serika,
+    Link = "https://mewhub.com"
+}
+
+local Tab = GUI:Tab{
+	Name = "Pokemon Ultima",
+	Icon = "rbxassetid://10516768544"
+}
+
+Tab:Button{
+	Name = "Load Script",
+	Description = nil,
+	Callback = function() 
+	
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/ScripterHaxer/Script/main/Ultima"))()
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/ScripterHaxer/Script/main/UltimaGiver"))()
+
+	    end
+}
+
+local Tab = GUI:Tab{
+	Name = "Project Snowsoft",
+	Icon = "rbxassetid://10514675800"
+}
+
+Tab:Button{
+	Name = "Load Script",
+	Description = nil,
+	Callback = function() 
+	
+ 
+loadstring(game:HttpGet("https://raw.githubusercontent.com/ScripterHaxer/Script/main/Ultima"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/ScripterHaxer/Script/main/UltimaGiver"))()
+	    end
+}
+
+local Tab = GUI:Tab{
+	Name = "Project Delta",
+	Icon = "rbxassetid://10520735267"
+}
+
+Tab:Button{
+	Name = "Load Script",
+	Description = nil,
+	Callback = function() 
+	
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/ScripterHaxer/Script/main/ProjectDelta", true))()
+	
+	end
+	}
+
+
+
+
+local Tab = GUI:Tab{
+	Name = "Pokemon Brick Bronze",
+	Icon = "rbxassetid://10494898470"
+}
+local key
+Tab:Textbox {
+    Name = "Insert Key Here 🗳️",
+    Description = [[                                                             _G.wl_key=" paste numbers here "]].. "  -->",
+    Callback = function(str)
+        key = tostring(str)
+    end
+}
+
+Tab:Button{
+	Name = "Load Script",
+	Description = nil,
+	Callback = function(key) 
+	
+   _G.wl_key=[["]]..key..[["]]
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/ilovelatinagirls/baddestlatinas/main/HUGEBOOBS", true))()
+    
+	    end
+}
