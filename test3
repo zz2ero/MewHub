@@ -23,6 +23,10 @@ Tab:Button{
 	    end
 }
 
+
+
+
+
 local Tab = GUI:Tab{
 	Name = "Project Snowsoft",
 	Icon = "rbxassetid://10514675800"
@@ -38,6 +42,9 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/ScripterHaxer/Script/
 loadstring(game:HttpGet("https://raw.githubusercontent.com/ScripterHaxer/Script/main/UltimaGiver"))()
 	    end
 }
+
+
+
 
 local Tab = GUI:Tab{
 	Name = "Project Delta",
@@ -58,8 +65,8 @@ Tab:Button{
 
 
 local Tab = GUI:Tab{
-	Name = "Pokemon Brick Bronze",
-	Icon = "rbxassetid://10494898470"
+	Name = "Pokemon Brick Bronze [gold]",
+	Icon = "rbxassetid://10536910568"
 }
 local key
 Tab:Textbox {
@@ -81,3 +88,55 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/ilovelatinagirls/badd
     
 	    end
 }
+
+local Tab = GUI:Tab{
+	Name = "Pokemon Brick Bronze [regular]",
+	Icon = "rbxassetid://10528327766"
+}
+local key
+Tab:Textbox {
+    Name = "Insert Key Here 🗳️",
+    Description = [[                                                             _G.wl_key=" paste numbers here "]].. "  -->",
+    Callback = function(str)
+        key = tostring(str)
+    end
+}
+
+Tab:Button{
+	Name = "Load Script",
+	Description = nil,
+	Callback = function(key) 
+	
+   _G.wl_key=[["]]..key..[["]]
+
+ loadstring(game:HttpGet("https://raw.githubusercontent.com/ilovelatinagirls/bigbootylatinas/main/boobs", true))()
+	    end
+}
+
+
+
+local Tab = GUI:Tab{
+	Name = "Bloxburg",
+	Icon = "rbxassetid://10528964960"
+}
+
+Tab:Button{
+	Name = "Load Script",
+	Description = nil,
+	Callback = function() 
+	
+--anti afk
+
+repeat task.wait() until game:IsLoaded()
+for i,v in pairs(getconnections(game.Players.LocalPlayer.Idled)) do
+    v:Disable()
+end
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/PainfulDestroyer/Roblox/main/Scar%20Hub"))()
+
+	    end
+}
+
+
+
+
