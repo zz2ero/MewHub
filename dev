@@ -102,7 +102,7 @@ local Tab =
 }
 
 Tab:Button {
-    Name = "Add Hide/Unhide Button👻",
+    Name = "Hide/Unhide Button👻",
     Description = nil,
     Callback = function()
         local Material =
@@ -136,7 +136,51 @@ Tab:Button {
         )
     end
 }
-Tab:Button {
+
+local section = Tab:section{
+    Name = "Main" -- default
+  }
+
+  section:Button {
+    Name = "Heal 💟",
+    Description = nil,
+    Callback = function()
+        _p.Network:get("PDS", "getPartyPokeBalls")
+    end
+}
+section:Button {
+    Name = "Open Map 🗺️",
+    Description = nil,
+    Callback = function()
+        _p.Menu.Map:fly()
+    end
+}
+section:Button {
+    Name = "Unstuck 🔓",
+    Description = nil,
+    Callback = function()
+        _p.Menu.options:getUnstuck(true)
+    end
+}
+section:Toggle {
+    Name = "Toggle Repel 🏃🐶",
+    StartingState = false,
+    Description = nil,
+    Callback = function(value)
+        if value then
+            _p.Repel.steps = 1000000
+        else
+            _p.Repel.steps = 0
+        end
+        Enabled = false
+    end
+}
+
+local section = Tab:section{
+    Name = "Pokemon" -- default
+  }
+
+section:Button {
     Name = "Open Party List 🐶",
     Description = nil,
     Callback = function()
@@ -144,7 +188,7 @@ Tab:Button {
     end
 }
 
-Tab:Button {
+section:Button {
     Name = "Open PC 🖥️",
     Description = nil,
     Callback = function()
@@ -152,7 +196,11 @@ Tab:Button {
     end
 }
 
-Tab:Button {
+local section = Tab:section{
+    Name = "Skip" -- default
+  }
+
+  section:Button {
     Name = "Beat All Gyms 🥇",
     Description = nil,
     Callback = function()
@@ -161,7 +209,7 @@ Tab:Button {
         end
     end
 }
-Tab:Button {
+section:Button {
     Name = "Skip Chat (Slightly Bugged) ⏭️",
     Description = nil,
     Callback = function()
@@ -193,7 +241,10 @@ Tab:Button {
         end)
     end
 }
-Tab:dropdown(
+local section = Tab:section{
+    Name = "Hoverboard" -- default
+  }
+section:dropdown(
     {
         Name = "Set Hoverboard 🛹",
         StartingText = "Hoverboard..",
@@ -214,7 +265,7 @@ Tab:dropdown(
     }
 )
 
-Tab:dropdown(
+section:dropdown(
     {
         Name = "Set Paid Bord 🛹",
         StartingText = "Hoverboard..",
@@ -228,41 +279,6 @@ Tab:dropdown(
         end
     }
 )
-
-Tab:Button {
-    Name = "Heal 💟",
-    Description = nil,
-    Callback = function()
-        _p.Network:get("PDS", "getPartyPokeBalls")
-    end
-}
-Tab:Button {
-    Name = "Open Map 🗺️",
-    Description = nil,
-    Callback = function()
-        _p.Menu.Map:fly()
-    end
-}
-Tab:Button {
-    Name = "Unstuck 🔓",
-    Description = nil,
-    Callback = function()
-        _p.Menu.options:getUnstuck(true)
-    end
-}
-Tab:Toggle {
-    Name = "Toggle Repel 🏃🐶",
-    StartingState = false,
-    Description = nil,
-    Callback = function(value)
-        if value then
-            _p.Repel.steps = 1000000
-        else
-            _p.Repel.steps = 0
-        end
-        Enabled = false
-    end
-}
  --
 
 --[[
@@ -272,7 +288,12 @@ Tab:Toggle {
     Name = "Story",
     Icon = "rbxassetid://10441188531"
 }
-Tab:Button {
+
+local section = Tab:section{
+    Name = "Skip Story" -- default
+  }
+
+  section:Button {
     Name = "Skip Meeting Jake",
     Description = nil,
     Callback = function()
@@ -282,35 +303,35 @@ Tab:Button {
         end
     end
 }
-Tab:Button {
+section:Button {
     Name = "Skip Meeting Parents",
     Description = nil,
     Callback = function()
         print(_p.PlayerData:completeEvent("MeetParents"))
     end
 }
-Tab:Button {
+section:Button {
     Name = "Skip Parents Kidnapped",
     Description = nil,
     Callback = function()
         print(_p.PlayerData:completeEvent("ParentsKidnappedScene"))
     end
 }
-Tab:Button {
+section:Button {
     Name = "Skip Jake Battle",
     Description = nil,
     Callback = function()
         print(_p.PlayerData:completeEvent("JakeBattle1"))
     end
 }
-Tab:Button {
+section:Button {
     Name = "Skip Thief Convo",
     Description = nil,
     Callback = function()
         print(_p.PlayerData:completeEvent("BronzeBrickStolen"))
     end
 }
-Tab:Button {
+section:Button {
     Name = "Track The Thief",
     Description = nil,
     Callback = function()
@@ -318,35 +339,35 @@ Tab:Button {
         game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-262.576, 65.0785, -862.594)
     end
 }
-Tab:Button {
+section:Button {
     Name = "Introduced To First Gym",
     Description = nil,
     Callback = function()
         print(_p.PlayerData:completeEvent("IntroducedToGym1"))
     end
 }
-Tab:Button {
+section:Button {
     Name = "Skip Jake Battle 2",
     Description = nil,
     Callback = function()
         print(_p.PlayerData:completeEvent("JakeBattle2")) -- Work on
     end
 }
-Tab:Button {
+section:Button {
     Name = "Skip Brimber Talk",
     Description = nil,
     Callback = function()
         print(_p.PlayerData:completeEvent("TalkToJakeAndSebastian"))
     end
 }
-Tab:Button {
+section:Button {
     Name = "Skip Groundon Scene",
     Description = nil,
     Callback = function()
         print(_p.PlayerData:completeEvent("GroudonScene"))
     end
 }
-Tab:Button {
+section:Button {
     Name = "Skip Following Jake",
     Description = nil,
     Callback = function()
@@ -354,35 +375,35 @@ Tab:Button {
         _p.PlayerData:completeEvent("JakeEndFollow")
     end
 }
-Tab:Button {
+section:Button {
     Name = "Skip Rosecove Welcome",
     Description = nil,
     Callback = function()
         _p.PlayerData:completeEvent("RosecoveWelcome")
     end
 }
-Tab:Button {
+section:Button {
     Name = "Skip Lighthouse Scene",
     Description = nil,
     Callback = function()
         _p.PlayerData:completeEvent("LighthouseScene")
     end
 }
-Tab:Button {
+section:Button {
     Name = "Skip Cypress After Gym 3",
     Description = nil,
     Callback = function()
         _p.PlayerData:completeEvent("ProfAfterGym3")
     end
 }
-Tab:Button {
+section:Button {
     Name = "Skip Jake/Tess Goodbyes",
     Description = nil,
     Callback = function()
         _p.PlayerData:completeEvent("JakeAndTessDepart")
     end
 }
-Tab:Button {
+section:Button {
     Name = "Gym 4 Tools Giver",
     Description = nil,
     Callback = function()
@@ -441,7 +462,12 @@ local Tab =
     Name = "Misc",
     Icon = "rbxassetid://10440794784"
 }
-Tab:Button {
+
+local section = Tab:section{
+    Name = "FPS" -- default
+  }
+
+  section:Button {
     Name = "Material Remover",
     Description = nil,
     Callback = function()
@@ -476,7 +502,11 @@ Tab:Button {
     end
 }
 
-Tab:Textbox {
+local section = Tab:section{
+    Name = "Chat" -- default
+  }
+
+  section:Textbox {
     Name = "Chat Logger (insert discord webhook)",
     Callback = function(value)
         local marketplaceService = game:GetService("MarketplaceService")
@@ -532,7 +562,7 @@ Tab:Textbox {
     end
 }
 
-Tab:Button {
+section:Button {
     Name = "Chat Translator",
     Description = nil,
     Callback = function()
@@ -540,15 +570,11 @@ Tab:Button {
     end
 }
 
-Tab:Button {
-    Name = "Server Browser",
-    Description = nil,
-    Callback = function()
-        loadstring(game:HttpGet("https://www.scriptblox.com/raw/Server-Browser_80", true))()
-    end
-}
+local section = Tab:section{
+    Name = "Movement" -- default
+  }
 
-Tab:Button {
+  section:Button {
     Name = "Ctrl + TP",
     Description = nil,
     Callback = function()
@@ -568,7 +594,7 @@ Tab:Button {
     end
 }
 
-Tab:Button {
+section:Button {
     Name = "Noclip + Fly [Toggle - X]",
     Description = nil,
     Callback = function()
@@ -576,11 +602,23 @@ Tab:Button {
     end
 }
 
-Tab:Button {
+local section = Tab:section{
+    Name = "Servers" -- default
+  }
+
+  section:Button {
     Name = "Rejoin",
     Description = nil,
     Callback = function()
         loadstring(game:HttpGet("https://raw.githubusercontent.com/Exunys/Rejoin-Game/main/Rejoin%20Game.lua"))()
+    end
+}
+
+section:Button {
+    Name = "Server Browser",
+    Description = nil,
+    Callback = function()
+        loadstring(game:HttpGet("https://www.scriptblox.com/raw/Server-Browser_80", true))()
     end
 }
 --[[
@@ -591,7 +629,12 @@ local Tab =
     Name = "Shops",
     Icon = "rbxassetid://10440803307"
 }
-Tab:Button {
+
+local section = Tab:section{
+    Name = "Stores" -- default
+  }
+
+  section:Button {
     Name = "Pokemart 🏪",
     Description = nil,
     Callback = function()
@@ -607,7 +650,7 @@ Tab:Button {
         _p.Menu.shop:open()
     end
 }
-Tab:Button {
+section:Button {
     Name = "BP Shop 🏬",
     Description = nil,
     Callback = function()
@@ -623,7 +666,7 @@ Tab:Button {
         _p.Menu.battleShop:open()
     end
 }
-Tab:Button {
+section:Button {
     Name = "Stoneshop 🧱",
     Description = nil,
     Callback = function()
@@ -639,7 +682,7 @@ Tab:Button {
         _p.Menu.shop:open("stnshp")
     end
 }
-Tab:Button {
+section:Button {
     Name = "Buy Sushi (gives berries + prism scales) 🍣",
     Description = nil,
     Callback = function()
@@ -679,32 +722,39 @@ Tab:Button {
         _p.RunningShoes:enable()
     end
 }
-Tab:Button {
+
+local section = Tab:section{
+    Name = "Items" -- default
+  }
+
+  section:Button {
     Name = "Give Leftovers (1x use)",
     Description = nil,
     Callback = function()
         print(_p.PlayerData:completeEvent("GivenLeftovers"))
     end
 }
-Tab:Button {
+section:Button {
     Name = "Give Kings Rock (1x use)",
     Description = nil,
     Callback = function()
         print(_p.PlayerData:completeEvent("KingsRockGiven"))
     end
 }
+
+section:Button {
+    Name = "Gives SawsbuckCoffee (1x use)",
+    Description = nil,
+    Callback = function()
+        print(_p.PlayerData:completeEvent("GivenSawsbuckCoffee"))
+    end
+}
+
 Tab:Button {
     Name = "BlackWhite Egg (1x use)",
     Description = nil,
     Callback = function()
         print(_p.PlayerData:completeEvent("ReceivedBWEgg"))
-    end
-}
-Tab:Button {
-    Name = "Gives SawsbuckCoffee (1x use)",
-    Description = nil,
-    Callback = function()
-        print(_p.PlayerData:completeEvent("GivenSawsbuckCoffee"))
     end
 }
 --[[
@@ -715,7 +765,12 @@ local Tab =
     Name = "Currency",
     Icon = "rbxassetid://10440868155"
 }
-Tab:Button {
+
+local section = Tab:section{
+    Name = "Money" -- default
+  }
+
+  section:Button {
     Name = "PokeDollars (Risky) (max money) 😱💰",
     Description = nil,
     Callback = function()
@@ -748,7 +803,7 @@ Tab:Button {
         end
     end
 }
-Tab:Button {
+section:Button {
     Name = "PokeDollars Less Risky (+$10080) 🤑💰",
     Description = nil,
     Callback = function()
@@ -781,7 +836,7 @@ Tab:Button {
         end
     end
 }
-Tab:Button {
+section:Button {
     Name = "Tix (+25)💲",
     Description = nil,
     Callback = function()
@@ -806,20 +861,29 @@ local Tab =
     Name = "Item Generator",
     Icon = "rbxassetid://10441107015"
 }
-Tab:Textbox {
+
+local section = Tab:section{
+    Name = "Name / Quantity" -- default
+  }
+
+  section:Textbox {
     Name = "Insert Item Name 🗳️",
     Callback = function(str)
         item1 = tostring(str)
     end
 }
-Tab:Textbox {
+section:Textbox {
     Name = "Insert Quantity 🗳️",
     Callback = function(str)
         qy = tonumber(str)
     end
 }
 
-Tab:Button {
+local section = Tab:section{
+    Name = "Spawner" -- default
+  }
+
+  section:Button {
     Name = "Spawn Item ✨",
     Description = nil,
     Callback = function()
@@ -827,7 +891,7 @@ Tab:Button {
     end
 }
 
-Tab:dropdown(
+section:dropdown(
     {
         Name = "Item List 📃",
         StartingText = "these are common items spawned",
@@ -843,21 +907,27 @@ Tab:dropdown(
         end
     }
 )
+
+
 local Tab =
     GUI:Tab {
     Name = "Levels + IV + EV",
     Icon = "rbxassetid://10441082070"
 }
 
+local section = Tab:section{
+    Name = "Levels" -- default
+  }
+
 local pee
-Tab:Textbox {
+section:Textbox {
     Name = "Insert Amount of Rare Candies 🗳️",
     Callback = function(str)
         pee = str
     end
 }
 
-Tab:dropdown(
+section:dropdown(
     {
         Name = "Pokemon Instant Lvl Changer 📈⬆️",
         StartingText = "Party Slot",
@@ -880,7 +950,12 @@ Tab:dropdown(
     }
 )
 
-Tab:dropdown(
+local section = Tab:section{
+    Name = "IV Changer" -- default
+  }
+
+
+section:dropdown(
     {
         Name = "Pokemon IV Changer 3️⃣1️⃣",
         StartingText = "Party Slot",
@@ -906,7 +981,11 @@ Tab:dropdown(
     }
 )
 
-Tab:dropdown(
+local section = Tab:section{
+    Name = "EV Changer" -- default
+  }
+
+  section:dropdown(
     {
         Name = "Pokemon Attack EV Changer ⚔️",
         StartingText = "Party Slot",
@@ -929,7 +1008,7 @@ Tab:dropdown(
     }
 )
 
-Tab:dropdown(
+section:dropdown(
     {
         Name = "Pokemon Defense EV Changer 🛡️",
         StartingText = "Party Slot",
@@ -952,7 +1031,7 @@ Tab:dropdown(
     }
 )
 
-Tab:dropdown(
+section:dropdown(
     {
         Name = "Pokemon Sp Atk EV Changer 🏹",
         StartingText = "Party Slot",
@@ -975,7 +1054,7 @@ Tab:dropdown(
     }
 )
 
-Tab:dropdown(
+section:dropdown(
     {
         Name = "Pokemon Sp Def EV Changer 🛡️",
         StartingText = "Party Slot",
@@ -998,7 +1077,7 @@ Tab:dropdown(
     }
 )
 
-Tab:dropdown(
+section:dropdown(
     {
         Name = "Pokemon Speed EV Changer 🏃",
         StartingText = "Party Slot",
@@ -1021,7 +1100,7 @@ Tab:dropdown(
     }
 )
 
-Tab:dropdown(
+section:dropdown(
     {
         Name = "Pokemon HP EV Changer 💖",
         StartingText = "Party Slot",
@@ -1044,7 +1123,7 @@ Tab:dropdown(
     }
 )
 
-Tab:dropdown(
+section:dropdown(
     {
         Name = "Pokemon EV Remover ❌",
         StartingText = "Party Slot",
@@ -1077,7 +1156,11 @@ Tab:dropdown(
     }
 )
 
-Tab:dropdown(
+local section = Tab:section{
+    Name = "Nature ( +speed )" -- default
+  }
+
+  section:dropdown(
     {
         Name = "Pokemon Jolly Nature Changer (+speed)(-sp atk) 💚",
         StartingText = "Party Slot",
@@ -1100,7 +1183,7 @@ Tab:dropdown(
     }
 )
 
-Tab:dropdown(
+section:dropdown(
     {
         Name = "Pokemon Timid Nature Changer (+speed)(-atk) 💚",
         StartingText = "Party Slot",
@@ -1123,7 +1206,7 @@ Tab:dropdown(
     }
 )
 
-Tab:dropdown(
+section:dropdown(
     {
         Name = "Pokemon Naive Nature Changer (+speed)(-sp def) 💚",
         StartingText = "Party Slot",
@@ -1146,7 +1229,7 @@ Tab:dropdown(
     }
 )
 
-Tab:dropdown(
+section:dropdown(
     {
         Name = "Pokemon Hasty Nature Changer (+speed)(-def) 💚",
         StartingText = "Party Slot",
@@ -1169,7 +1252,11 @@ Tab:dropdown(
     }
 )
 
-Tab:dropdown(
+local section = Tab:section{
+    Name = "Nature ( +def )" -- default
+  }
+
+  section:dropdown(
     {
         Name = "Pokemon Implish Nature Changer (+def)(-sp atk) 💙",
         StartingText = "Party Slot",
@@ -1192,7 +1279,7 @@ Tab:dropdown(
     }
 )
 
-Tab:dropdown(
+section:dropdown(
     {
         Name = "Pokemon Bold Nature Changer (+def)(-atk) 💙",
         StartingText = "Party Slot",
@@ -1215,7 +1302,7 @@ Tab:dropdown(
     }
 )
 
-Tab:dropdown(
+section:dropdown(
     {
         Name = "Pokemon Lax Nature Changer (+def)(-sp def) 💙",
         StartingText = "Party Slot",
@@ -1238,7 +1325,7 @@ Tab:dropdown(
     }
 )
 
-Tab:dropdown(
+section:dropdown(
     {
         Name = "Pokemon Relaxed Nature Changer (+def)(-speed) 💙",
         StartingText = "Party Slot",
@@ -1261,7 +1348,11 @@ Tab:dropdown(
     }
 )
 
-Tab:dropdown(
+local section = Tab:section{
+    Name = "Nature ( +atk )" -- default
+  }
+
+  section:dropdown(
     {
         Name = "Pokemon Lonely Nature Changer (+atk)(-def) ❤️",
         StartingText = "Party Slot",
@@ -1284,7 +1375,7 @@ Tab:dropdown(
     }
 )
 
-Tab:dropdown(
+section:dropdown(
     {
         Name = "Pokemon Adamant Nature Changer (+atk)(-sp atk) ❤️",
         StartingText = "Party Slot",
@@ -1307,7 +1398,7 @@ Tab:dropdown(
     }
 )
 
-Tab:dropdown(
+section:dropdown(
     {
         Name = "Pokemon Naughty Nature Changer (+atk)(-sp def) ❤️",
         StartingText = "Party Slot",
@@ -1330,7 +1421,7 @@ Tab:dropdown(
     }
 )
 
-Tab:dropdown(
+section:dropdown(
     {
         Name = "Pokemon Brave Nature Changer (+atk)(-speed) ❤️",
         StartingText = "Party Slot",
@@ -1353,7 +1444,11 @@ Tab:dropdown(
     }
 )
 
-Tab:dropdown(
+local section = Tab:section{
+    Name = "Nature ( +sp atk )" -- default
+  }
+
+  section:dropdown(
     {
         Name = "Pokemon Modest Nature Changer (+sp atk)(-atk) 💜",
         StartingText = "Party Slot",
@@ -1376,7 +1471,7 @@ Tab:dropdown(
     }
 )
 
-Tab:dropdown(
+section:dropdown(
     {
         Name = "Pokemon Mild Nature Changer (+sp atk)(-def) 💜",
         StartingText = "Party Slot",
@@ -1399,7 +1494,7 @@ Tab:dropdown(
     }
 )
 
-Tab:dropdown(
+section:dropdown(
     {
         Name = "Pokemon Rash Nature Changer (+sp atk)(-sp def) 💜",
         StartingText = "Party Slot",
@@ -1422,7 +1517,7 @@ Tab:dropdown(
     }
 )
 
-Tab:dropdown(
+section:dropdown(
     {
         Name = "Pokemon Quiet Nature Changer (+sp atk)(-speed) 💜",
         StartingText = "Party Slot",
@@ -1445,7 +1540,11 @@ Tab:dropdown(
     }
 )
 
-Tab:dropdown(
+local section = Tab:section{
+    Name = "Nature ( +sp def )" -- default
+  }
+
+  section:dropdown(
     {
         Name = "Pokemon Calm Nature Changer (+sp def)(-atk) 💗",
         StartingText = "Party Slot",
@@ -1468,7 +1567,7 @@ Tab:dropdown(
     }
 )
 
-Tab:dropdown(
+section:dropdown(
     {
         Name = "Pokemon Gentle Nature Changer (+sp def)(-def) 💗",
         StartingText = "Party Slot",
@@ -1491,7 +1590,7 @@ Tab:dropdown(
     }
 )
 
-Tab:dropdown(
+section:dropdown(
     {
         Name = "Pokemon Careful Nature Changer (+sp def)(-sp atk) 💗",
         StartingText = "Party Slot",
@@ -1514,7 +1613,7 @@ Tab:dropdown(
     }
 )
 
-Tab:dropdown(
+section:dropdown(
     {
         Name = "Pokemon Sassy Nature Changer (+sp def)(-speed) 💗",
         StartingText = "Party Slot",
@@ -1537,7 +1636,11 @@ Tab:dropdown(
     }
 )
 
-Tab:dropdown(
+local section = Tab:section{
+    Name = "Nature ( null )" -- default
+  }
+
+  section:dropdown(
     {
         Name = "Pokemon Serious Nature Changer (null)( null) 💛",
         StartingText = "Party Slot",
@@ -1622,18 +1725,24 @@ local playertab = {}
 for i, v in pairs(game:GetService("Players"):GetPlayers()) do
     table.insert(playertab, v.Name)
 end
+
 Tab:dropdown(
     {
         Name = "Select Player 🗳️",
         StartingText = "Player...",
         Items = playertab,
-        Description = "Selects any player in the game.",
+        Description = "Select any player in the game.",
         Callback = function(v)
             playertc = v
         end
     }
 )
-Tab:Button {
+
+local section = Tab:section{
+    Name = "Kick" -- default
+  }
+
+  section:Button {
     Name = "Kick Player ✨",
     Description = nil,
     Callback = function()
@@ -1656,42 +1765,8 @@ Tab:Button {
         end
     end
 }
-Tab:Button {
-    Name = "Force Initiated Trade With Player ⚖️",
-    Description = nil,
-    Callback = function()
-        forcetrade(game:GetService("Players")[playertc])
-    end
-}
-Tab:Button {
-    Name = "Force Initiated Trade All ⚖️🤼",
-    Description = nil,
-    Callback = function()
-        for _, plr in pairs(game:GetService("Players"):GetChildren()) do
-            if plr.Name ~= localPlayer.Name then
-                forcetrade(playertc)
-            end
-        end
-    end
-}
-Tab:Button {
-    Name = "Force Battle With Player⚔️",
-    Description = nil,
-    Callback = function()
-        forcebattle(game:GetService("Players")[plr2])
-    end
-}
 
-Tab:Button {
-    Name = "Force Win With Player⚔️🏆",
-    Description = nil,
-    Callback = function()
-        autowin("p2")
-        autowin("p1")
-    end
-}
-
-Tab:Button {
+section:Button {
     Name = "Kick All Players ✨",
     Description = nil,
     Callback = function()
@@ -1703,9 +1778,55 @@ Tab:Button {
     end
 }
 
+local section = Tab:section{
+    Name = "Force Trade" -- default
+  }
+
+section:Button {
+    Name = "Force Initiated Trade With Player ⚖️",
+    Description = nil,
+    Callback = function()
+        forcetrade(game:GetService("Players")[playertc])
+    end
+}
+section:Button {
+    Name = "Force Initiated Trade All ⚖️🤼",
+    Description = nil,
+    Callback = function()
+        for _, plr in pairs(game:GetService("Players"):GetChildren()) do
+            if plr.Name ~= localPlayer.Name then
+                forcetrade(playertc)
+            end
+        end
+    end
+}
+
+local section = Tab:section{
+    Name = "Battle" -- default
+  }
+
+section:Button {
+    Name = "Force Battle With Player⚔️",
+    Description = nil,
+    Callback = function()
+        forcebattle(game:GetService("Players")[plr2])
+    end
+}
+
+section:Button {
+    Name = "Force Win With Player⚔️🏆",
+    Description = nil,
+    Callback = function()
+        autowin("p2")
+        autowin("p1")
+    end
+}
+
 --[[
     PC
 ]]
+
+
 local Tab =
     GUI:Tab {
     Name = "PC",
@@ -1720,7 +1841,11 @@ Tab:Button {
     end
 }
 
-Tab:Button {
+local section = Tab:section{
+    Name = "Dupe Glitch" -- default
+  }
+  
+section:Button {
     Name = "Step one ✨ (put slot 1 pokemon in pc, [press] then close pc)",
     Description = nil,
     Callback = function()
@@ -1728,22 +1853,27 @@ Tab:Button {
     end
 }
 
-Tab:Button {
+section:Button {
     Name = "Step two ✨ (click this button after)",
     Description = nil,
     Callback = function()
         _p.Network:get("PDS", "takeDCPokemon", 1)
     end
 }
+
+local section = Tab:section{
+    Name = "Within PC" -- default
+  }
+
 local text
-Tab:Textbox {
+section:Textbox {
     Name = "Type Name 🆔",
     Callback = function(str)
         text = str
     end
 }
 
-Tab:dropdown(
+section:dropdown(
     {
         Name = "Name Changer 🌐",
         StartingText = "Party Slot",
@@ -1763,7 +1893,7 @@ Tab:dropdown(
     }
 )
 
-Tab:dropdown(
+section:dropdown(
     {
         Name = "Wallpaper Changer 📱",
         StartingText = "Select Wallpaper",
@@ -1809,5 +1939,3 @@ Tab:dropdown(
         end
     }
 )
-
-wait(0.1)
