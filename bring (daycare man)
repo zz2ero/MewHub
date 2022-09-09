@@ -1,6 +1,0 @@
-local lp = game:service'Players'.LocalPlayer;
-      game:GetService("Workspace").chunk9["DayCareMan"]:MoveTo(lp.Character.LeftHand.Position)
-      local Object = game.ReplicatedStorage.DayCare:WaitForChild("DayCareLady")
-      local CloneObject = Object:Clone()
-      CloneObject.Parent = game.Workspace.chunk9
-      game:GetService("Workspace").chunk9["DayCareLady"]:MoveTo(lp.Character.LeftHand.Position)
