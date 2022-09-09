@@ -1842,14 +1842,14 @@ Tab:Button {
 }
 
 local section = Tab:section{
-    Name = "Dupe Glitch" -- default
+    Name = "Dupe Glitch (x1)" -- default
   }
   
 section:Button {
-    Name = "Step one ✨ (put slot 1 pokemon in pc, [press] then close pc)",
+    Name = "Step one ✨ (put slot 2 pokemon in pc, [press] then close pc)",
     Description = nil,
     Callback = function()
-        _p.Network:get("PDS", "leaveDCPokemon", 1)
+        _p.Network:get("PDS", "leaveDCPokemon", 2)
     end
 }
 
@@ -1857,6 +1857,8 @@ section:Button {
     Name = "Step two ✨ (click this button after)",
     Description = nil,
     Callback = function()
+        _p.Network:get("PDS", "takeDCPokemon", 1)
+        wait(1)
         _p.Network:get("PDS", "takeDCPokemon", 1)
     end
 }
