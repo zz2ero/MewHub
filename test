@@ -885,7 +885,7 @@ local section = Tab:section{
 
   section:Button {
     Name = "Spawn Item ✨",
-    Description = doesn't work in every pbb game,
+    Description = "doesn't work in every pbb game",
     Callback = function()
 
 
@@ -1602,7 +1602,7 @@ local section = Tab:section{
 
   section:Button {
     Name = "Kick Player ✨",
-    Description = gold feature only,
+    Description = "gold feature only",
     Callback = function()
 
     end
@@ -1610,7 +1610,7 @@ local section = Tab:section{
 
 section:Button {
     Name = "Kick All Players ✨",
-    Description = gold feature only,
+    Description = "gold feature only",
     Callback = function()
 
     end
@@ -1622,14 +1622,14 @@ local section = Tab:section{
 
 section:Button {
     Name = "Force Initiated Trade With Player ⚖️",
-    Description = gold feature only,
+    Description = "gold feature only",
     Callback = function()
 
     end
 }
 section:Button {
     Name = "Force Initiated Trade All ⚖️🤼",
-    Description = gold feature only,
+    Description = "gold feature only",
     Callback = function()
 
     end
@@ -1641,7 +1641,7 @@ local section = Tab:section{
 
 section:Button {
     Name = "Force Battle With Player⚔️",
-    Description = gold feature only,
+    Description = "gold feature only",
     Callback = function()
 
     end
@@ -1649,7 +1649,7 @@ section:Button {
 
 section:Button {
     Name = "Force Win With Player⚔️🏆",
-    Description = gold feature only,
+    Description = "gold feature only",
     Callback = function()
 
     end
