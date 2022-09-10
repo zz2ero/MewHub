@@ -774,17 +774,62 @@ local section = Tab:section{
         Name = "Find Hidden Pokeballs (1x use)",
         StartingText = "Chunk",
         Items = {
-            {"Chunk 1", 1},
-            {"Chunk 2", 2},
-            {"Chunk 3 (Silvent City)", 3},
-            {"Chunk 4", 4},
-            {"Chunk 5", 5},
-            {"Chunk 6", 6},
-            {"Chunk 7", 7},
-            {"Chunk 8", 8},
-            {"Chunk 9", 9},
-            {"Chunk 10", 10},
-            {"Chunk 11", 11}
+            {"Chunk 1 (Mitis Town + Route 1)", 1},
+            {"Chunk 2 (Cheshma Town + Gale Forest + Route 2)", 2},
+            {"Chunk 3 (Route 3 + Silvent City + Route 4)", 3},
+            {"Chunk 4 (Route 5 + Old Graveyard", 4},
+            {"Chunk 5 (Brimber City", 5},
+            {"Chunk 6 (Route 6", 6},
+            {"Chunk 7 (Mt. Igneus)", 7},
+            {"Chunk 8 (Route 7)", 8},
+            {"Chunk 9 (Lagoona Lake)", 9},
+            {"Chunk 10 (Route 8)", 10},
+            {"Chunk 11 (Rosecove City + Rosecove Beach)", 11},
+            {"Chunk 12 (Route 9)", 12},
+            {"Chunk 13 (Fortulose Manor)", 13},
+            {"Chunk 14 (Grove of Dreams)", 14},
+            {"Chunk 15 (Route 10)", 15},
+            {"Chunk 16 (Cragonos Mines)", 16},
+            {"Chunk 17 (Cragonos Cliffs again)", 17},
+            {"Chunk 18 (Cragonos Peak)", 18},
+            {"Chunk 19 (Anthian City - Housing District)", 19},
+            {"Chunk 20 (Anthian City - Shopping District)", 20},
+            {"Chunk 21 (Anthian City - Battle District)", 21},
+            {"Chunk 22 (Anthian City - Park District)", 22},
+            {"Chunk 23 (Anthian Sewer)", 23},
+            {"Chunk 24 (Route 11)", 24},
+            {"Chunk 25 (Aredia City)", 25},
+            {"Chunk 26 (Glistening Grotto)", 26},
+            {"Chunk 27 (Old Aredia)", 27},
+            {"Chunk 28 (Desert Castle Ruins 1)", 28},
+            {"Chunk 29 (Desert Castle Ruins 2)", 29},
+            {"Chunk 30 (Desert Castle Ruins 3)", 30},
+            {"Chunk 31 (Desert Castle Ruins 4)", 31},
+            {"Chunk 32 (Desert Castle Ruins 5)", 32},
+            {"Chunk 33 (Desert Castle Ruins 6)", 33},
+            {"Chunk 34 (Desert Castle Ruins 7 + Victini)", 34},
+            {"Chunk 35 (Desert Catacombs)", 35},
+            {"Chunk 36 (Route 12)", 36},
+            {"Chunk 37 (Nature's Den)", 37},
+            {"Chunk 38 (Route 13)", 38},
+            {"Chunk 39 (Fluoruma City)", 39},
+            {"Chunk 40 (Igneus Depths)", 40},
+            {"Chunk 41 (Chamber of the Jewel)", 41},
+            {"Chunk 42 (Route 14  1)", 42},
+            {"Chunk 43 (Route 14  2", 43},
+            {"Chunk 44 (Cragonos Sanctuary)", 44},
+            {"Chunk 45 (Route 15)", 45},
+            {"Chunk 46 (Frostveil City)", 46},
+            {"Chunk 47 (Route 16)", 47},
+            {"Chunk 48 (Freezing Fissure)", 48},
+            {"Chunk 51 (Cosmeos Valley)", 51},
+            {"Chunk 52 (Port Decca)", 52},
+            {"Chunk 53 (Decca Beach)", 53},
+
+            -- needs finishing [ halfway done !!!]
+
+
+
         },
         Description = "This teleports hidden pokeballs to you (must be in right chunk)",
         Callback = function(v)
@@ -930,16 +975,22 @@ local section = Tab:section{
         end   
 
 
+                -- needs finishing
 
 
+                -- needs finishing
 
 
+                -- needs finishing
 
 
+                -- needs finishing
 
 
+                -- needs finishing
 
 
+                -- needs finishing
 
 
 
