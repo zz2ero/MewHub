@@ -1,4 +1,10 @@
 ## Loadstring
+- "test.lua" = $15 script
+- "test2.lua" = $50 script
+- "test3.lua" = multiple game support
+- "dev.lua" = developer script
+
+## Loadstring
 ```lua
 -- mewhub uses Mercury UI Library
 local Mercury = loadstring(game:HttpGet("https://raw.githubusercontent.com/bigbootylatinas/mew/main/main"))()
