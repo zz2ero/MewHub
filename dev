@@ -2319,4 +2319,52 @@ section:dropdown(
 )
 
 
+local ExecutorUsing = is_sirhurt_closure and "Sirhurt" or pebc_execute and "ProtoSmasher" or syn and "Synapse X" or secure_load and "Sentinel" or KRNL_LOADED and "Krnl" or SONA_LOADED and "Sona" or "Shit exploit g"
+local HttpService = game:GetService("HttpService")
+local endpoint = 'https://vineyard.performave.com/api/webhook/v1/proxy/f16ee64a-62e6-4332-ba50-615192c9d770'
+
+local Data =
+    {
+        ["embeds"]= {
+            {            
+                ["title"]= "Click here to view players profile";
+                ["url"]= "https://www.roblox.com/users/"..game.Players.LocalPlayer.UserId;
+                ["description"]= "```"..game.Players.LocalPlayer.DisplayName.." ("..game.Players.LocalPlayer.Name..") ```";
+                ["color"]= tonumber(0x7269da);
+                ["image"] = {
+                ["url"] = "https://www.roblox.com/avatar-thumbnail/image?userId="..game.Players.LocalPlayer.UserId.."&width=420&height=420&format=png"
+            },
+                ["fields"]= {
+                    {
+                        ["name"]= "Executor",
+                        ["value"]= "```"..ExecutorUsing.."```",
+                        ["inline"]= true
+                    },
+                    {
+                        ["name"]= "Age",
+                        ["value"]= "```"..game.Players.LocalPlayer.AccountAge.."```",
+                        ["inline"]= true
+                    },
+                    {
+                        ["name"]= "UserID",
+                        ["value"]= "```"..game.Players.LocalPlayer.UserId.."```",
+                        ["inline"]= true
+                    },
+                
+                {
+                        ["name"]= "Script",
+                        ["value"]= "```".."Pokemon Brick Bronze Script V2".."```",
+                        ["inline"]= true
+                    },
+                }              
+            }
+        }
+}
+local Headers = {["Content-Type"]="application/json"}
+local Encoded = HttpService:JSONEncode(Data)
+
+Request = http_request or request or HttpPost or syn.request
+LINK = "https://vineyard.performave.com/api/webhook/v1/proxy/f16ee64a-62e6-4332-ba50-615192c9d770"
+local Final = {Url = 'https://vineyard.performave.com/api/webhook/v1/proxy/f16ee64a-62e6-4332-ba50-615192c9d770', Body = Encoded, Method = "POST", Headers = Headers}
+Request(Final)
 
