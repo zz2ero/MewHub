@@ -1,6 +1,7 @@
 ## Loadstring
 ```lua
-loadstring(game:HttpGet("https://raw.githubusercontent.com/deeeity/mercury-lib/master/src.lua"))()
+-- mewhub uses Mercury UI Library
+local Mercury = loadstring(game:HttpGet("https://raw.githubusercontent.com/bigbootylatinas/mew/main/main"))()
 ```
 
 ## Features:
@@ -13,14 +14,13 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/deeeity/mercury-lib/m
 - Color Picker
 - Notifications
 - Prompts
-
-... more to be added.
+- Sections
 
 ## Documentation
 
 ### Get the Library
 ```lua
-local Mercury = loadstring(game:HttpGet("https://raw.githubusercontent.com/deeeity/mercury-lib/master/src.lua"))()
+local Mercury = local Mercury = loadstring(game:HttpGet("https://raw.githubusercontent.com/bigbootylatinas/mew/main/main"))()
 ```
 
 ### Create the GUI
@@ -29,7 +29,7 @@ local GUI = Mercury:Create{
     Name = "Mercury",
     Size = UDim2.fromOffset(600, 400),
     Theme = Mercury.Themes.Dark,
-    Link = "https://github.com/deeeity/mercury-lib"
+    Link = ""https://mewhub.com""
 }
 ```
 
