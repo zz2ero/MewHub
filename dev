@@ -460,15 +460,24 @@ local section = Tab:section{
     Name = "Daycare Lady" -- default
   }
   
-section:Button {
-    Name = "Leave Daycare Pokemon (Slot 1 + Slot 2)",
-    Description = nil,
-    Callback = function()
-        _p.Network:get("PDS", "leaveDCPokemon", 1)
-        wait(1)
-        _p.Network:get("PDS", "leaveDCPokemon", 2)
-    end
-}
+  section:dropdown(
+    {
+        Name = "Leave Pokemon at Daycare",
+        StartingText = "Party Slot",
+        Items = {
+            {"Slot 1", 1},
+            {"Slot 2", 2},
+            {"Slot 3", 3},
+            {"Slot 4", 4},
+            {"Slot 5", 5},
+            {"Slot 6", 6}
+        },
+        Description = "This leaves your selected pokemon in the daycare",
+        Callback = function(v)
+        _p.Network:get("PDS", "leaveDCPokemon", v)
+        end
+    }
+)
 
 section:Button {
     Name = "Take Daycare Pokemon",
