@@ -769,6 +769,194 @@ local section = Tab:section{
     Name = "Items" -- default
   }
 
+  section:dropdown(
+    {
+        Name = "Find Hidden Pokeballs (1x use)",
+        StartingText = "Chunk",
+        Items = {
+            {"Chunk 1", 1},
+            {"Chunk 2", 2},
+            {"Chunk 3 (Silvent City)", 3},
+            {"Chunk 4", 4},
+            {"Chunk 5", 5},
+            {"Chunk 6", 6},
+            {"Chunk 7", 7},
+            {"Chunk 8", 8},
+            {"Chunk 9", 9},
+            {"Chunk 10", 10},
+            {"Chunk 11", 11}
+        },
+        Description = "This teleports hidden pokeballs to you (must be in right chunk)",
+        Callback = function(v)
+
+            
+
+            if(v == 1) then 
+                -- Chunk 1
+                local lp = game:service "Players".LocalPlayer       
+                local plr1 = game.Players.LocalPlayer.Character
+                
+                game:GetService("Workspace").chunk1["#Item"]:MoveTo(lp.Character.LeftHand.Position)
+                wait(2)
+                plr1.HumanoidRootPart.CFrame = plr1.HumanoidRootPart.CFrame * CFrame.new(0,1.8,0)
+                wait(5)
+                game:GetService("Workspace").chunk1["#Item"]:Destroy() 
+                wait(.5)
+                game:GetService("Workspace").chunk1["#Item"]:MoveTo(lp.Character.LeftHand.Position)
+                wait(2)
+                plr1.HumanoidRootPart.CFrame = plr1.HumanoidRootPart.CFrame * CFrame.new(0,1.8,0)
+                wait(5)
+                game:GetService("Workspace").chunk1["#Item"]:Destroy() 
+                wait(.5)
+                game:GetService("Workspace").chunk1["#Item"]:MoveTo(lp.Character.LeftHand.Position)
+                wait(2)
+                plr1.HumanoidRootPart.CFrame = plr1.HumanoidRootPart.CFrame * CFrame.new(0,1.8,0)
+                wait(5)
+                game:GetService("Workspace").chunk1["#Item"]:Destroy() 
+                wait(.5)
+                game:GetService("Workspace").chunk1["#Item"]:MoveTo(lp.Character.LeftHand.Position)
+                wait(2)
+                plr1.HumanoidRootPart.CFrame = plr1.HumanoidRootPart.CFrame * CFrame.new(0,1.8,0)
+                wait(5)
+                game:GetService("Workspace").chunk1["#Item"]:Destroy() 
+                wait(.5)
+                game:GetService("Workspace").chunk1["#Item"]:MoveTo(lp.Character.LeftHand.Position)
+                wait(2)
+                plr1.HumanoidRootPart.CFrame = plr1.HumanoidRootPart.CFrame * CFrame.new(0,1.8,0)
+                wait(5)
+                game:GetService("Workspace").chunk1["#Item"]:Destroy() 
+                wait(.5)
+                game:GetService("Workspace").chunk1["#Item"]:MoveTo(lp.Character.LeftHand.Position)
+                wait(2)
+                plr1.HumanoidRootPart.CFrame = plr1.HumanoidRootPart.CFrame * CFrame.new(0,1.8,0)
+                wait(5)
+                game:GetService("Workspace").chunk1["#Item"]:Destroy() 
+                wait(.5)
+        
+            
+        end
+
+
+            if(v == 2) then 
+                -- Chunk 2
+                local lp = game:service "Players".LocalPlayer       
+                local plr1 = game.Players.LocalPlayer.Character
+                
+                game:GetService("Workspace").chunk2["#Item"]:MoveTo(lp.Character.LeftHand.Position)
+                wait(2)
+                plr1.HumanoidRootPart.CFrame = plr1.HumanoidRootPart.CFrame * CFrame.new(0,1.8,0)
+                wait(5)
+                game:GetService("Workspace").chunk2["#Item"]:Destroy() 
+                wait(.5)
+                game:GetService("Workspace").chunk2["#Item"]:MoveTo(lp.Character.LeftHand.Position)
+                wait(2)
+                plr1.HumanoidRootPart.CFrame = plr1.HumanoidRootPart.CFrame * CFrame.new(0,1.8,0)
+                wait(5)
+                game:GetService("Workspace").chunk2["#Item"]:Destroy() 
+                wait(.5)
+                game:GetService("Workspace").chunk2["#Item"]:MoveTo(lp.Character.LeftHand.Position)
+                wait(2)
+                plr1.HumanoidRootPart.CFrame = plr1.HumanoidRootPart.CFrame * CFrame.new(0,1.8,0)
+                wait(5)
+                game:GetService("Workspace").chunk2["#Item"]:Destroy() 
+                wait(.5)
+                game:GetService("Workspace").chunk2["#Item"]:MoveTo(lp.Character.LeftHand.Position)
+                wait(2)
+                plr1.HumanoidRootPart.CFrame = plr1.HumanoidRootPart.CFrame * CFrame.new(0,1.8,0)
+                wait(5)
+                game:GetService("Workspace").chunk2["#Item"]:Destroy() 
+                wait(.5)
+                game:GetService("Workspace").chunk2["#Item"]:MoveTo(lp.Character.LeftHand.Position)
+                wait(2)
+                plr1.HumanoidRootPart.CFrame = plr1.HumanoidRootPart.CFrame * CFrame.new(0,1.8,0)
+                wait(5)
+                game:GetService("Workspace").chunk2["#Item"]:Destroy() 
+                wait(.5)
+                game:GetService("Workspace").chunk2["#Item"]:MoveTo(lp.Character.LeftHand.Position)
+                wait(2)
+                plr1.HumanoidRootPart.CFrame = plr1.HumanoidRootPart.CFrame * CFrame.new(0,1.8,0)
+                wait(5)
+                game:GetService("Workspace").chunk2["#Item"]:Destroy() 
+                wait(.5)
+                
+        
+            
+        end
+
+
+            if(v == 3) then 
+                -- Chunk 3
+                local lp = game:service "Players".LocalPlayer       
+                local plr1 = game.Players.LocalPlayer.Character
+                
+                game:GetService("Workspace").chunk3["#Item"]:MoveTo(lp.Character.LeftHand.Position)
+                wait(2)
+                plr1.HumanoidRootPart.CFrame = plr1.HumanoidRootPart.CFrame * CFrame.new(0,1.8,0)
+                wait(5)
+                game:GetService("Workspace").chunk3["#Item"]:Destroy() 
+                wait(.5)
+                game:GetService("Workspace").chunk3["#Item"]:MoveTo(lp.Character.LeftHand.Position)
+                wait(2)
+                plr1.HumanoidRootPart.CFrame = plr1.HumanoidRootPart.CFrame * CFrame.new(0,1.8,0)
+                wait(5)
+                game:GetService("Workspace").chunk3["#Item"]:Destroy() 
+                wait(.5)
+                game:GetService("Workspace").chunk3["#Item"]:MoveTo(lp.Character.LeftHand.Position)
+                wait(2)
+                plr1.HumanoidRootPart.CFrame = plr1.HumanoidRootPart.CFrame * CFrame.new(0,1.8,0)
+                wait(5)
+                game:GetService("Workspace").chunk3["#Item"]:Destroy() 
+                wait(.5)
+                game:GetService("Workspace").chunk3["#Item"]:MoveTo(lp.Character.LeftHand.Position)
+                wait(2)
+                plr1.HumanoidRootPart.CFrame = plr1.HumanoidRootPart.CFrame * CFrame.new(0,1.8,0)
+                wait(5)
+                game:GetService("Workspace").chunk3["#Item"]:Destroy() 
+                wait(.5)
+                game:GetService("Workspace").chunk3["#Item"]:MoveTo(lp.Character.LeftHand.Position)
+                wait(2)
+                plr1.HumanoidRootPart.CFrame = plr1.HumanoidRootPart.CFrame * CFrame.new(0,1.8,0)
+                wait(5)
+                game:GetService("Workspace").chunk3["#Item"]:Destroy() 
+                wait(.5)
+                game:GetService("Workspace").chunk3["#Item"]:MoveTo(lp.Character.LeftHand.Position)
+                wait(2)
+                plr1.HumanoidRootPart.CFrame = plr1.HumanoidRootPart.CFrame * CFrame.new(0,1.8,0)
+                wait(5)
+                game:GetService("Workspace").chunk3["#Item"]:Destroy() 
+                wait(.5)
+        
+                   
+        end   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        end
+    }
+  )
+
   section:Button {
     Name = "Give Leftovers (1x use)",
     Description = nil,
