@@ -434,11 +434,11 @@ Tab:Button {
 }
 
 local section = Tab:section{
-    Name = "Daycare Lady" -- default
+    Name = "Daycare Man" -- default
   }
 
 section:Button {
-    Name = "Bring Daycare Man",
+    Name = "Bring Daycare Man 👴",
     Description = nil,
     Callback = function()
         local lp = game:service "Players".LocalPlayer
@@ -455,7 +455,7 @@ local section = Tab:section{
   }
   
 section:Button {
-    Name = "Leave Daycare Pokemon ✨ (Slot 1 + Slot 2)",
+    Name = "Leave Daycare Pokemon (Slot 1 + Slot 2)",
     Description = nil,
     Callback = function()
         _p.Network:get("PDS", "leaveDCPokemon", 1)
@@ -465,7 +465,7 @@ section:Button {
 }
 
 section:Button {
-    Name = "Take Daycare Pokemon ✨",
+    Name = "Take Daycare Pokemon",
     Description = nil,
     Callback = function()
         _p.Network:get("PDS", "takeDCPokemon", 1)
@@ -709,7 +709,7 @@ section:Button {
     end
 }
 section:Button {
-    Name = "Stoneshop 🧱",
+    Name = "Stoneshop 💎",
     Description = nil,
     Callback = function()
         local _p = nil
