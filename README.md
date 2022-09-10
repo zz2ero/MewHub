@@ -20,7 +20,7 @@ local Mercury = loadstring(game:HttpGet("https://raw.githubusercontent.com/bigbo
 
 ### Get the Library
 ```lua
-local Mercury = local Mercury = loadstring(game:HttpGet("https://raw.githubusercontent.com/bigbootylatinas/mew/main/main"))()
+local Mercury = loadstring(game:HttpGet("https://raw.githubusercontent.com/bigbootylatinas/mew/main/main"))()
 ```
 
 ### Create the GUI
