@@ -91,7 +91,7 @@ local GUI =
     Mercury:Create {
     Name = "Dev Testing",
     Size = UDim2.fromOffset(600, 400),
-    Theme = Mercury.Themes.Serika,
+    Theme = Mercury.Themes.Mew,
     Link = "https://mewhub.com"
 }
 
