@@ -424,7 +424,20 @@ local Tab =
     Name = "Breeding",
     Icon = "rbxassetid://10440776957"
 }
+
 Tab:Button {
+    Name = "Open PC 🖥️",
+    Description = nil,
+    Callback = function()
+        syn.secure_call(_p.Menu.pc.bootUp, localPlayer.PlayerScripts.ChatScript, _p.Menu.pc)
+    end
+}
+
+local section = Tab:section{
+    Name = "Daycare Lady" -- default
+  }
+
+section:Button {
     Name = "Bring Daycare Man",
     Description = nil,
     Callback = function()
@@ -436,7 +449,36 @@ Tab:Button {
         game:GetService("Workspace").chunk9["DayCareLady"]:MoveTo(lp.Character.LeftHand.Position)
     end
 }
-Tab:Button {
+
+local section = Tab:section{
+    Name = "Daycare Lady" -- default
+  }
+  
+section:Button {
+    Name = "Leave Daycare Pokemon ✨ (Slot 1 + Slot 2)",
+    Description = nil,
+    Callback = function()
+        _p.Network:get("PDS", "leaveDCPokemon", 1)
+        wait(1)
+        _p.Network:get("PDS", "leaveDCPokemon", 2)
+    end
+}
+
+section:Button {
+    Name = "Take Daycare Pokemon ✨",
+    Description = nil,
+    Callback = function()
+        _p.Network:get("PDS", "takeDCPokemon", 1)
+        wait(1)
+        _p.Network:get("PDS", "takeDCPokemon", 1)
+    end
+}
+
+local section = Tab:section{
+    Name = "Hatching" -- default
+  }
+
+section:Button {
     Name = "Hoverboard Spin ['M' - Toggle]",
     Description = nil,
     Callback = function()
