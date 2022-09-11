@@ -2238,10 +2238,10 @@ Tab:Button {
 local section = Tab:section{
     Name = "Dupe Glitch (x1)" -- default
   }
-  
+  local count
 section:Button {
-    Name = "Dupe✨ (put [slot 2] pokemon in PC, [click])",
-    Description = nil,
+    Name = "Dupe✨ (put [slot 2] pokemon in PC, [click] ) ",
+    Description = "This will dupe your second slot pokemon + item.",
     Callback = function()
         _p.Network:get("PDS", "leaveDCPokemon", 2)
 
@@ -2252,6 +2252,8 @@ section:Button {
         _p.Network:get("PDS", "takeDCPokemon", 1)
         wait(.2)
         _p.Network:get("PDS", "takeDCPokemon", 1)
+
+        count = count + 1
     end
 }
 local section = Tab:section{
