@@ -153,16 +153,12 @@ section:Button {
     Name = "save 💾",
     Description = nil,
     Callback = function()
-        local _p = nil
-        for _, v in pairs(getgc(true)) do
-            if typeof(v) == "table" then
-                if rawget(v, "PlayerData") then
-                    _p = v
-                    break
-                end
-            end
-        end
-        _p.Network:get("PDS", "save") -- = PlayerData:save() ?
+        
+    _p.PlayerData:save()
+    
+    syn.secure_call(_p.saveGame, localPlayer.PlayerScripts.ChatScript, _p.saveGame)
+    _p.Menu:enable()
+    _p.MasterControl.WalkEnabled = true
     end
 }
 
@@ -321,10 +317,7 @@ local section = Tab:section{
     Name = "Skip Meeting Jake",
     Description = nil,
     Callback = function()
-        local _p = nil
-        for _, v in pairs(getgc(true)) do
-            print(_p.PlayerData:completeEvent("MeetJake"))
-        end
+        print(_p.PlayerData:completeEvent("MeetJake"))
     end
 }
 section:Button {
@@ -335,17 +328,17 @@ section:Button {
     end
 }
 section:Button {
-    Name = "Skip Parents Kidnapped",
-    Description = nil,
-    Callback = function()
-        print(_p.PlayerData:completeEvent("ParentsKidnappedScene"))
-    end
-}
-section:Button {
     Name = "Skip Jake Battle",
     Description = nil,
     Callback = function()
         print(_p.PlayerData:completeEvent("JakeBattle1"))
+    end
+}
+section:Button {
+    Name = "Skip Parents Kidnapped",
+    Description = nil,
+    Callback = function()
+        print(_p.PlayerData:completeEvent("ParentsKidnappedScene"))
     end
 }
 section:Button {
@@ -480,7 +473,7 @@ local section = Tab:section{
   
   section:dropdown(
     {
-        Name = "Leave Pokemon at Daycare",
+        Name = "Leave Pokemon at Daycare 👵",
         StartingText = "Party Slot",
         Items = {
             {"Slot 1", 1},
@@ -498,7 +491,7 @@ local section = Tab:section{
 )
 
 section:Button {
-    Name = "Take Daycare Pokemon",
+    Name = "Take Daycare Pokemon 👶",
     Description = nil,
     Callback = function()
         _p.Network:get("PDS", "takeDCPokemon", 1)
@@ -512,7 +505,7 @@ local section = Tab:section{
   }
 
 section:Button {
-    Name = "Hoverboard Spin ['M' - Toggle]",
+    Name = "Hoverboard Spin ['M' - Toggle] 🥚",
     Description = nil,
     Callback = function()
         local uis = game:GetService("UserInputService")
@@ -1045,14 +1038,14 @@ local section = Tab:section{
     Name = "Give Leftovers (1x use)",
     Description = nil,
     Callback = function()
-        print(_p.PlayerData:completeEvent("GivenLeftovers"))
+        _p.PlayerData:completeEvent("GivenLeftovers")
     end
 }
 section:Button {
     Name = "Give Kings Rock (1x use)",
     Description = nil,
     Callback = function()
-        print(_p.PlayerData:completeEvent("KingsRockGiven"))
+        _p.PlayerData:completeEvent("KingsRockGiven")
     end
 }
 
@@ -1060,7 +1053,8 @@ section:Button {
     Name = "Gives SawsbuckCoffee (1x use)",
     Description = nil,
     Callback = function()
-        print(_p.PlayerData:completeEvent("GivenSawsbuckCoffee"))
+        _p.Network:get("PDS", "isMilD")
+        _p.PlayerData:completeEvent("GivenSawsbuckCoffee")
     end
 }
 
@@ -1990,7 +1984,7 @@ local section = Tab:section{
   }
 
 section:Textbox {
-    Name = "Chunk Loader 🌍",
+    Name = "Chunk Loader 🌻",
     Callback = function(id)
         local _p = nil
         for _, v in pairs(getgc(true)) do
@@ -2033,7 +2027,41 @@ section:dropdown(
 
 section:dropdown(
     {
-        Name = "Locations",
+        Name = "RTD Worlds 🌎",
+        StartingText = "Chunk",
+        Items = {
+            {"Trade Resort 🏖️", 1},
+            {"Battle Colloseum 🏛️", 2},
+            {"Adventure 🏞️", 3}
+        },
+        Description = "This teleports you to your desired city",
+        Callback = function(v)
+            
+            if(v == 1) then -- trade resort
+            local plr = game:GetService("Players").LocalPlayer
+            local TeleportService = game:GetService("TeleportService")
+            TeleportService:Teleport(10628142719, plr)
+            end
+
+            if(v == 2) then -- battle coll
+            local plr = game:GetService("Players").LocalPlayer
+            local TeleportService = game:GetService("TeleportService")
+            TeleportService:Teleport([[still need to get]], plr)
+            end
+
+            if(v == 3) then -- adventure
+            local plr = game:GetService("Players").LocalPlayer
+            local TeleportService = game:GetService("TeleportService")
+            TeleportService:Teleport(10573403836, plr)
+            end
+
+        end
+    }
+)
+
+section:dropdown(
+    {
+        Name = "Locations 📋",
         StartingText = "Chunk",
         Items = {
             {"Chunk 1 (Mitis Town + Route 1)", 1},
