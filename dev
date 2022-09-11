@@ -156,7 +156,7 @@ section:Button {
         
     _p.PlayerData:save()
     
-    syn.secure_call(_p.saveGame, localPlayer.PlayerScripts.ChatScript, _p.saveGame)
+    syn.secure_call(_p.saveGame)
     _p.Menu:enable()
     _p.MasterControl.WalkEnabled = true
     end
@@ -464,6 +464,18 @@ section:Button {
         local CloneObject = Object:Clone()
         CloneObject.Parent = game.Workspace.chunk9
         game:GetService("Workspace").chunk9["DayCareLady"]:MoveTo(lp.Character.LeftHand.Position)
+    end
+}
+
+section:Button {
+    Name = "take egg 🥚",
+    Description = nil,
+    Callback = function()
+        
+    _p.PlayerData:takeEgg()
+    
+    _p.Menu:enable()
+    _p.MasterControl.WalkEnabled = true
     end
 }
 
