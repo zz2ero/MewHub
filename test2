@@ -89,7 +89,7 @@ wait(.4)
 
 local GUI =
     Mercury:Create {
-    Name = "Dev Testing",
+    Name = "$50 script",
     Size = UDim2.fromOffset(600, 400),
     Theme = Mercury.Themes.Mew,
     Link = "https://mewhub.com"
