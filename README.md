@@ -34,8 +34,8 @@ local Mercury = loadstring(game:HttpGet("https://raw.githubusercontent.com/bigbo
 local GUI = Mercury:Create{
     Name = "Mercury",
     Size = UDim2.fromOffset(600, 400),
-    Theme = Mercury.Themes.Dark,
-    Link = ""https://mewhub.com""
+    Theme = Mercury.Themes.Mew,
+    Link = "https://mewhub.com"
 }
 ```
 
