@@ -229,6 +229,17 @@ local section = Tab:section{
         end
     end
 }
+
+
+
+section:Button {
+    Name = "Fast Text [ON] ⏭️",
+    Description = nil,
+    Callback = function()
+        _p.Menu.options.FastText = true
+    end
+}
+
 section:Button {
     Name = "Skip Chat (Slightly Bugged) ⏭️",
     Description = nil,
