@@ -1,3 +1,5 @@
+<p align="left"> <img src="https://komarev.com/ghpvc/?username=bigbootylatinas&label=Profile%20views&color=0e75b6&style=flat" alt="bigbootylatinas" /> </p>
+
 ## Loadstring
 - "test.lua" = $15 script
 - "test2.lua" = $50 script
