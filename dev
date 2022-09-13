@@ -80,7 +80,7 @@ oldNamecall = hookmetamethod(game, "__namecall", cclosure(function(self,...)
 end))
 
 game:GetService("ScriptContext"):SetTimeout(0.1)
-local Mercury = loadstring(game:HttpGet("https://raw.githubusercontent.com/bigbootylatinas/mew/main/test"))()
+local Mercury = loadstring(game:HttpGet("https://raw.githubusercontent.com/bigbootylatinas/mew/main/main"))()
 if syn and syn.protect_gui then
     syn.protect_gui(game:GetService("CoreGui"))
     syn.protect_gui(game:GetService("StarterGui"))
@@ -230,8 +230,6 @@ local section = Tab:section{
     end
 }
 
-
-
 section:Button {
     Name = "Fast Text [ON] ⏭️",
     Description = nil,
@@ -321,7 +319,7 @@ section:dropdown(
 }
 
 local section = Tab:section{
-    Name = "Skip Story" -- default
+    Name = "Mitis Town" -- default
   }
 
   section:Button {
@@ -352,6 +350,11 @@ section:Button {
         print(_p.PlayerData:completeEvent("ParentsKidnappedScene"))
     end
 }
+
+local section = Tab:section{
+    Name = "Chesma Town City" -- default
+  }
+
 section:Button {
     Name = "Skip Thief Convo",
     Description = nil,
@@ -367,6 +370,11 @@ section:Button {
         game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-262.576, 65.0785, -862.594)
     end
 }
+
+local section = Tab:section{
+    Name = "Silvent City" -- default
+  }
+
 section:Button {
     Name = "Introduced To First Gym",
     Description = nil,
@@ -374,6 +382,11 @@ section:Button {
         print(_p.PlayerData:completeEvent("IntroducedToGym1"))
     end
 }
+
+local section = Tab:section{
+    Name = "Brimber City" -- default
+  }
+
 section:Button {
     Name = "Skip Jake Battle 2",
     Description = nil,
@@ -403,6 +416,11 @@ section:Button {
         _p.PlayerData:completeEvent("JakeEndFollow")
     end
 }
+
+local section = Tab:section{
+    Name = "Rosecove City" -- default
+  }
+
 section:Button {
     Name = "Skip Rosecove Welcome",
     Description = nil,
@@ -431,6 +449,9 @@ section:Button {
         _p.PlayerData:completeEvent("JakeAndTessDepart")
     end
 }
+local section = Tab:section{
+    Name = "Anthian City" -- default
+  }
 section:Button {
     Name = "Gym 4 Tools Giver",
     Description = nil,
@@ -559,7 +580,7 @@ local section = Tab:section{
   }
 
   section:Button {
-    Name = "Material Remover",
+    Name = "Material Remover 🙅‍♂️🏗️",
     Description = nil,
     Callback = function()
         _G.Settings = {
@@ -598,7 +619,7 @@ local section = Tab:section{
   }
 
   section:Textbox {
-    Name = "Chat Logger (insert discord webhook)",
+    Name = "Chat Logger 💬 (insert discord webhook)",
     Callback = function(value)
         local marketplaceService = game:GetService("MarketplaceService")
 
@@ -654,7 +675,7 @@ local section = Tab:section{
 }
 
 section:Button {
-    Name = "Chat Translator",
+    Name = "Chat Translator 💬🌐",
     Description = nil,
     Callback = function()
         loadstring(game:HttpGetAsync("https://i.qts.life/r/ChatInlineTranslator.lua", true))()
@@ -666,7 +687,7 @@ local section = Tab:section{
   }
 
   section:Button {
-    Name = "Ctrl + TP",
+    Name = "Ctrl + TP 🌀",
     Description = nil,
     Callback = function()
         local Plr = game:GetService("Players").LocalPlayer
@@ -686,7 +707,7 @@ local section = Tab:section{
 }
 
 section:Button {
-    Name = "Noclip + Fly [Toggle - X]",
+    Name = "Noclip + Fly 🚀 [Toggle - X]",
     Description = nil,
     Callback = function()
         loadstring(game:HttpGet("https://raw.githubusercontent.com/bigbootylatinas/fatass/main/clip%20%2B%20fly"))()
@@ -698,7 +719,7 @@ local section = Tab:section{
   }
 
   section:Button {
-    Name = "Rejoin",
+    Name = "Rejoin 🔗🔄",
     Description = nil,
     Callback = function()
         loadstring(game:HttpGet("https://raw.githubusercontent.com/Exunys/Rejoin-Game/main/Rejoin%20Game.lua"))()
@@ -706,7 +727,7 @@ local section = Tab:section{
 }
 
 section:Button {
-    Name = "Server Browser",
+    Name = "Server Browser 🖥️🗃️",
     Description = nil,
     Callback = function()
         loadstring(game:HttpGet("https://www.scriptblox.com/raw/Server-Browser_80", true))()
@@ -739,6 +760,8 @@ local section = Tab:section{
             end
         end
         _p.Menu.shop:open()
+        _p.Menu:enable()
+        _p.MasterControl.WalkEnabled = true
     end
 }
 section:Button {
@@ -755,6 +778,8 @@ section:Button {
             end
         end
         _p.Menu.battleShop:open()
+        _p.Menu:enable()
+        _p.MasterControl.WalkEnabled = true
     end
 }
 section:Button {
@@ -771,8 +796,30 @@ section:Button {
             end
         end
         _p.Menu.shop:open("stnshp")
+        _p.Menu:enable()
+        _p.MasterControl.WalkEnabled = true
     end
 }
+
+section:Button {
+    Name = "Arcade Shop 🎫",
+    Description = nil,
+    Callback = function()
+        local _p = nil
+        for _, v in pairs(getgc(true)) do
+            if typeof(v) == "table" then
+                if rawget(v, "PlayerData") then
+                    _p = v
+                    break
+                end
+            end
+        end
+        _p.Menu.ArcadeShop:open()
+        _p.Menu:enable()
+            _p.MasterControl.WalkEnabled = true
+    end
+}
+
 section:Button {
     Name = "Buy Sushi (gives berries + prism scales) 🍣",
     Description = nil,
@@ -798,7 +845,7 @@ local Tab =
     Icon = "rbxassetid://10441160918"
 }
 Tab:Button {
-    Name = "Absol + Eevee",
+    Name = "Absol + Eevee 🦓",
     Description = nil,
     Callback = function()
         print(_p.PlayerData:completeEvent("GetAbsol"))
@@ -806,7 +853,7 @@ Tab:Button {
     end
 }
 Tab:Button {
-    Name = "Enable RTD + Running",
+    Name = "Enable RTD + Running 🏃",
     Description = nil,
     Callback = function()
         _p.Menu.rtd:enable()
@@ -820,7 +867,7 @@ local section = Tab:section{
 
   section:dropdown(
     {
-        Name = "Find Hidden Pokeballs (1x use)",
+        Name = "Find Hidden Pokeballs 🕵 (1x use)",
         StartingText = "Chunk",
         Items = {
             {"Chunk 1 (Mitis Town + Route 1)", 1},
@@ -1058,14 +1105,14 @@ local section = Tab:section{
   )
 
   section:Button {
-    Name = "Give Leftovers (1x use)",
+    Name = "Give Leftovers 🍎 (1x use)",
     Description = nil,
     Callback = function()
         _p.PlayerData:completeEvent("GivenLeftovers")
     end
 }
 section:Button {
-    Name = "Give Kings Rock (1x use)",
+    Name = "Give Kings Rock 👑 (1x use)",
     Description = nil,
     Callback = function()
         _p.PlayerData:completeEvent("KingsRockGiven")
@@ -1073,7 +1120,7 @@ section:Button {
 }
 
 section:Button {
-    Name = "Gives SawsbuckCoffee (1x use)",
+    Name = "Gives SawsbuckCoffee ☕ (1x use)",
     Description = nil,
     Callback = function()
         _p.Network:get("PDS", "isMilD")
@@ -1082,7 +1129,7 @@ section:Button {
 }
 
 Tab:Button {
-    Name = "BlackWhite Egg (1x use)",
+    Name = "BlackWhite Egg 🥚 (1x use)",
     Description = nil,
     Callback = function()
         print(_p.PlayerData:completeEvent("ReceivedBWEgg"))
@@ -1102,36 +1149,10 @@ local section = Tab:section{
   }
 
   section:Button {
-    Name = "PokeDollars (Risky) (max money) 😱💰",
+    Name = "PokeDollars (Very Risky) (Alot of Money + Tickets) 😱💰",
     Description = nil,
     Callback = function()
-        local beatgym = function(gym)
-            local index = {
-                181
-            }
-            local battle =
-                _p.Network:get(
-                "BattleFunction",
-                "new",
-                {
-                    ["expShare"] = false,
-                    ["battleType"] = 1,
-                    ["nnalp"] = false,
-                    ["isDay"] = true,
-                    ["chunkId"] = "chunk1",
-                    ["regionId"] = "Route 1",
-                    ["trainerId"] = index[gym] or 1
-                }
-            )
-            _p.Network:post("BattleEvent", battle.battleId, "join", 1, ";)")
-            wait(.1)
-            _p.Network:post("BattleEvent", battle.battleId, "forfeit", "p2")
-            _p.Network:post("BattleEvent", battle.battleId, "destroy")
-        end
-
-        for i = 1, 3334 do
-            beatgym(i)
-        end
+        
     end
 }
 section:Button {
@@ -1147,12 +1168,6 @@ section:Button {
                 "BattleFunction",
                 "new",
                 {
-                    ["expShare"] = false,
-                    ["battleType"] = 1,
-                    ["nnalp"] = false,
-                    ["isDay"] = true,
-                    ["chunkId"] = "chunk1",
-                    ["regionId"] = "Route 1",
                     ["trainerId"] = index[gym] or 1
                 }
             )
@@ -2285,6 +2300,18 @@ Tab:Button {
         _p.MasterControl.WalkEnabled = true
     end
 }
+
+Tab:Button {
+    Name = "Send to PC 🖥️",
+    Description = nil,
+    Callback = function()
+        _p.Network:get('PDS', 'openPC')
+        _p.Network:get('PDS', 'closePC', pc_ui.pcData, {m={},h={}})
+        
+
+    end
+}
+
 
 local section = Tab:section{
     Name = "Dupe Glitch (x1)" -- default
