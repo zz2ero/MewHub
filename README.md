@@ -1,7 +1,6 @@
 ## Loadstring
 - "test.lua" = $15 script
 - "test2.lua" = $50 script
-- "test3.lua" = multiple game support
 - "dev.lua" = developer script
 
 ## Loadstring
