@@ -80,7 +80,7 @@ oldNamecall = hookmetamethod(game, "__namecall", cclosure(function(self,...)
 end))
 
 game:GetService("ScriptContext"):SetTimeout(0.1)
-local Mercury = loadstring(game:HttpGet("https://raw.githubusercontent.com/bigbootylatinas/mew/main/test"))()
+local Mercury = loadstring(game:HttpGet("https://raw.githubusercontent.com/bigbootylatinas/mew/main/main"))()
 if syn and syn.protect_gui then
     syn.protect_gui(game:GetService("CoreGui"))
     syn.protect_gui(game:GetService("StarterGui"))
