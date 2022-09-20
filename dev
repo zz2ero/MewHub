@@ -2256,10 +2256,9 @@ section:Button {
 }
 
 local dupecount = 1
-
 section:Button {
-    Name = "Dupe✨ ([Slot 2 - pokemon]) ",
-    Description = "This will dupe your second slot pokemon + item. (goes to first box, slot 1)",
+    Name = "Dupe✨ (put [slot 2] pokemon in PC, [click] ) ",
+    Description = "This will dupe your second slot pokemon + item.",
     Callback = function()
         
         if(dupecount == 1) then
@@ -2283,30 +2282,19 @@ section:Button {
 
 
         dupecount = dupecount + 1
+        
 
+        
+        --_p.Network:post("PDS", "DupePokemon")
+        _p.Network:get("PDS", "leaveDCPokemon", 2)
 
-local pcs = _p.Network:get("PDS", "openPC")
-
-_p.Network:get("PDS", "leaveDCPokemon", 2)
-wait(0.2)
-_p.Network:get("PDS", "closePC", pcs.id, {
-        ["m"] = {
-            ["2"] = {
-                [1] = 1, -- box
-                [2] = 1 -- slot
-            }
-        },
-        ["h"] = {
-            ["2"] = true
-        },
-        ["cb"] = 1
-    })
-
-wait(.1)
-_p.Network:get("PDS", "takeDCPokemon", 1)
-wait(.1)
-_p.Network:get("PDS", "takeDCPokemon", 1)
-wait(.1)
+        _p.Menu.pc:forceClose()
+        _p.Menu:enable()
+        _p.MasterControl.WalkEnabled = true
+        wait(0.2)
+        _p.Network:get("PDS", "takeDCPokemon", 1)
+        wait(0.2)
+        _p.Network:get("PDS", "takeDCPokemon", 1)
 
         
         
@@ -2334,21 +2322,6 @@ section:Button {
     end
 }
 
-section:Button {
-    Name = "Reset Count 🗳️",
-    Description = nil,
-    Callback = function()
-        GUI:Notification
-        {
-            Title = "Notification",
-            Text = "Counters have been reset to 0.",
-            Duration = 6,
-        }
-        dupecount = 1
-        slot = 1
-
-    end
-}
 local section = Tab:section{
     Name = "Seller Tools" -- default
   }
