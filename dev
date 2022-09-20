@@ -2279,12 +2279,7 @@ section:Button {
         }
         end
 
-
-
         dupecount = dupecount + 1
-        
-
-        
         --_p.Network:post("PDS", "DupePokemon")
         _p.Network:get("PDS", "leaveDCPokemon", 2)
 
@@ -2295,14 +2290,106 @@ section:Button {
         _p.Network:get("PDS", "takeDCPokemon", 1)
         wait(0.2)
         _p.Network:get("PDS", "takeDCPokemon", 1)
-
-        
-        
-        
-
-        
     end
 }
+
+section:dropdown(
+    {
+        Name = "Dupe Fill PC Box [🌐]",
+        StartingText = "PC Box #",
+        Items = {
+            {"Box 1", 1},
+            {"Box 2", 2},
+            {"Box 3", 3},
+            {"Box 4", 4},
+            {"Box 5", 5},
+            {"Box 6", 6}
+        },
+        Description = "This fills a PC box with duped party slot [2]",
+        Callback = function(v)
+            GUI:Notification
+        {
+            Title = "Notification",
+            Text = "Your PC Box ("..v..")'s being filled.",
+            Duration = 6,
+        }
+
+        for i = 1, 30 do
+            
+            local pcs = _p.Network:get("PDS", "openPC")
+    
+            _p.Network:get("PDS", "leaveDCPokemon", 2)
+
+            _p.Network:get("PDS", "closePC", pcs.id, {
+                    ["m"] = {
+                        ["2"] = {
+                            [1] = v,
+                            [2] = i
+                        }
+                    },
+                    ["h"] = {
+                        ["2"] = true
+                    },
+                    ["cb"] = 1
+                })
+
+            _p.Network:get("PDS", "takeDCPokemon", 1)
+
+            _p.Network:get("PDS", "takeDCPokemon", 1)
+    
+    
+            end
+
+
+        end
+    }
+)
+
+--[[
+section:Button {
+    Name = "Dupe Alot✨ (dupes [slot 2] pokemon (Fills box 1) ) ",
+    Description = "This will dupe your second slot pokemon + item. (fills box 1)",
+    Callback = function()
+        
+
+
+        GUI:Notification
+        {
+            Title = "Notification",
+            Text = "Box 1 is being filled with duped pokemon",
+            Duration = 6,
+        }
+
+
+        for i = 1, 30 do
+            
+        local pcs = _p.Network:get("PDS", "openPC")
+
+        _p.Network:get("PDS", "leaveDCPokemon", 2)
+        wait(0.2)
+        _p.Network:get("PDS", "closePC", pcs.id, {
+                ["m"] = {
+                    ["2"] = {
+                        [1] = "1",
+                        [2] = i
+                    }
+                },
+                ["h"] = {
+                    ["2"] = true
+                },
+                ["cb"] = 1
+            })
+        wait(0.2)
+        _p.Network:get("PDS", "takeDCPokemon", 1)
+        wait(0.2)
+        _p.Network:get("PDS", "takeDCPokemon", 1)
+
+
+        end
+
+    end
+}
+--]]
 
 section:Button {
     Name = "save 💾",
