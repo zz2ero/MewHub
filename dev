@@ -2297,7 +2297,7 @@ _p.Network:get("PDS", "closePC", pcs.id, {
             }
         },
         ["h"] = {
-            ["2"] = false
+            ["2"] = true
         },
         ["cb"] = 1
     })
