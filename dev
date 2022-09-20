@@ -2256,7 +2256,7 @@ section:Button {
 }
 
 local dupecount = 1
-local box = 1
+local slot = 1
 section:Button {
     Name = "Dupe✨ ([Slot 2 - pokemon]) ",
     Description = "This will dupe your second slot pokemon + item. (Fills first box)",
@@ -2283,22 +2283,21 @@ section:Button {
 
 
         dupecount = dupecount + 1
-        box = box + 1
+    slot = 1
 
-        
-        local pcs = _p.Network:get("PDS", "openPC")
+local pcs = _p.Network:get("PDS", "openPC")
 
 _p.Network:get("PDS", "leaveDCPokemon", 2)
 wait(0.2)
 _p.Network:get("PDS", "closePC", pcs.id, {
         ["m"] = {
             ["2"] = {
-                [1] = "1",
-                [2] = box
+                [1] = 1, -- box
+                [2] = slot -- slot
             }
         },
         ["h"] = {
-            ["2"] = true
+            ["2"] = false
         },
         ["cb"] = 1
     })
@@ -2307,6 +2306,8 @@ wait(.1)
 _p.Network:get("PDS", "takeDCPokemon", 1)
 wait(.1)
 _p.Network:get("PDS", "takeDCPokemon", 1)
+wait(.1)
+slot = slot + 1
         
         
         
@@ -2344,7 +2345,7 @@ section:Button {
             Duration = 6,
         }
         dupecount = 1
-        box = 1
+        slot = 1
 
     end
 }
