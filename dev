@@ -2307,13 +2307,6 @@ section:dropdown(
         },
         Description = "This fills a PC box with duped party slot [2]",
         Callback = function(v)
-            GUI:Notification
-        {
-            Title = "Notification",
-            Text = "Your PC Box ("..v..")'s being filled.",
-            Duration = 6,
-        }
-
         for i = 1, 30 do
             
             local pcs = _p.Network:get("PDS", "openPC")
